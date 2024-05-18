@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CanaisRepository extends JpaRepository<Canais, Long> {
+public interface CanaisRepository extends JpaRepository<Canais, Integer> {
 }

@@ -25,12 +25,12 @@ public class ProtocoloService {
         protocolo.setDescricao(protocoloDTO.getDescricao());
 
         Cliente cliente = protocoloDTO.getCliente();
-        if (cliente == null) {
+        // if (cliente == null) {
 
-            cliente = new Cliente();
-            cliente.setNome("Cliente Anônimo");
-            cliente.setEmail("anonimo@example.com");
-        }
+        //     cliente = new Cliente();
+        //     cliente.setNome("Cliente Anônimo");
+        //     cliente.setEmail("anonimo@example.com");
+        // }
 
         protocolo.setCliente(cliente);
 

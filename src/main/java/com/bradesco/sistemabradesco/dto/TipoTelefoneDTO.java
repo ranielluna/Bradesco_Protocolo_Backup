@@ -2,13 +2,11 @@ package com.bradesco.sistemabradesco.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import com.bradesco.sistemabradesco.models.Cliente;
 import com.bradesco.sistemabradesco.models.TipoTelefone;
 
 public class TipoTelefoneDTO {
   private int codigo;
   private String tipo;
-  private Cliente cliente;
   
   public TipoTelefoneDTO(TipoTelefone tipoTelefone) {
     BeanUtils.copyProperties(tipoTelefone, this);
@@ -32,15 +30,5 @@ public class TipoTelefoneDTO {
   public void setTipo(String tipo) {
     this.tipo = tipo;
   }
-
-  public Cliente getCliente() {
-    return cliente;
-  }
-
-  public void setCliente(Cliente cliente) {
-    this.cliente = cliente;
-  }
-  
-
-  
+ 
 }

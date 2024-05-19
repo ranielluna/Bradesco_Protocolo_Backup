@@ -10,8 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,10 +22,6 @@ public class TipoTelefone {
 
   @Column(name = "tipo", length=20, nullable = false)
   private String tipo;
-
-  @OneToOne
-  @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
-  private Cliente cliente;
 
 
   
@@ -53,13 +47,6 @@ public class TipoTelefone {
     this.tipo = tipo;
   }
 
-  public Cliente getCliente() {
-    return cliente;
-  }
-
-  public void setCliente(Cliente cliente) {
-    this.cliente = cliente;
-  }
 
   @Override
   public int hashCode() {

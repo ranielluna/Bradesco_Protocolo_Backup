@@ -5,7 +5,7 @@ import java.util.List;
 import com.bradesco.sistemabradesco.dto.CargoDTO;
 import com.bradesco.sistemabradesco.models.Cargo;
 import com.bradesco.sistemabradesco.repository.CargoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +13,7 @@ public class CargoService {
 
     private final CargoRepository cargoRepository;
 
-    @Autowired
+    // @Autowired
     public CargoService(CargoRepository cargoRepository) {
         this.cargoRepository = cargoRepository;
     }

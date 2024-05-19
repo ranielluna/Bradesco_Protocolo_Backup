@@ -1,6 +1,5 @@
 package com.bradesco.sistemabradesco.models;
 
-
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.dto.TelefoneClienteDTO;
@@ -32,7 +31,9 @@ public class TelefoneCliente {
   @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
   private Cliente cliente;
 
-
+  @OneToOne
+  @JoinColumn(name = "tipo_telefone_codigo", referencedColumnName = "codigo")
+  private TipoTelefone tipoTelefone;
 
   public TelefoneCliente() {
   }
@@ -74,6 +75,12 @@ public class TelefoneCliente {
     this.cliente = cliente;
   }
 
+  public TipoTelefone getTipoTelefone() {
+    return tipoTelefone;
+  }
+  public void setTipoTelefone(TipoTelefone tipoTelefone) {
+    this.tipoTelefone = tipoTelefone;
+  }
 //METODOS HASHCODE E EQUALS
   @Override
   public int hashCode() {

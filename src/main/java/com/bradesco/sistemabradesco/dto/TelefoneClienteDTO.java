@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.models.Cliente;
 import com.bradesco.sistemabradesco.models.TelefoneCliente;
+import com.bradesco.sistemabradesco.models.TipoTelefone;
 
 public class TelefoneClienteDTO {
 
@@ -11,6 +12,7 @@ public class TelefoneClienteDTO {
   private int ddd;
   private int numero;
   private Cliente cliente;
+  private TipoTelefone tipoTelefone;
 
   public TelefoneClienteDTO(TelefoneCliente telefoneCliente){
     BeanUtils.copyProperties(telefoneCliente, this);
@@ -49,6 +51,14 @@ public class TelefoneClienteDTO {
 
   public void setCliente(Cliente cliente) {
     this.cliente = cliente;
+  }
+
+  public TipoTelefone getTipoTelefone() {
+    return tipoTelefone;
+  }
+
+  public void setTipoTelefone(TipoTelefone tipoTelefone) {
+    this.tipoTelefone = tipoTelefone;
   }
   
 }

@@ -2,7 +2,6 @@ package com.bradesco.sistemabradesco.dto;
 
 import org.springframework.beans.BeanUtils;
 
-
 import com.bradesco.sistemabradesco.models.Canais;
 
 

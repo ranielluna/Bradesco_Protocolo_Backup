@@ -21,14 +21,14 @@ public class ProtocoloController {
 
   @Autowired
 	private ProtocoloRepository repository;
+	@Autowired
+	private ProtocoloService protocoloService;
 
 	@GetMapping
 	public String paginaInicial() {
 		return "Bem-vindo à API de protocolos!";
 	}
 
-	@Autowired
-	private ProtocoloService protocoloService;
 
 	@GetMapping("/lista")
 	public List<Protocolo> listarProtocolos(){

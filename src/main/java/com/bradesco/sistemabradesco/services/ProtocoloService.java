@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bradesco.sistemabradesco.dto.ProtocoloDTO;
 import com.bradesco.sistemabradesco.models.Canais;
-// import com.bradesco.sistemabradesco.models.Cliente;
+import com.bradesco.sistemabradesco.models.Cliente;
 import com.bradesco.sistemabradesco.models.Protocolo;
 import com.bradesco.sistemabradesco.models.TipoProtocolo;
 import com.bradesco.sistemabradesco.repository.ProtocoloRepository;
@@ -23,24 +23,16 @@ public class ProtocoloService {
         }
 
         Protocolo protocolo = new Protocolo();
+        TipoProtocolo tpProtocolo = protocoloDTO.getTipoProtocolo();
+        Cliente cliente = protocoloDTO.getCliente();
+        Canais canais = protocoloDTO.getCanal();
+
         protocolo.setCodigo(protocoloDTO.getCodigo());
         protocolo.setDataAbertura(LocalDate.now());
-        protocolo.setData_prazo(LocalDate.now());
+        LocalDate prazo = protocolo.getDataAbertura().plusDays(tpProtocolo.getPrazoTratativa()); 
+        protocolo.setData_prazo(prazo);
         protocolo.setDescricao(protocoloDTO.getDescricao());
-
-
-        // Cliente cliente = protocoloDTO.getCliente();
-        Canais canais = protocoloDTO.getCanal();
-        TipoProtocolo tpProtocolo = protocoloDTO.getTipoProtocolo();
-
-        // if (cliente == null) {
-
-        //     cliente = new Cliente();
-        //     cliente.setNome("Cliente Anônimo");
-        //     cliente.setEmail("anonimo@example.com");
-        // }
-
-        // protocolo.setCliente(cliente);
+        protocolo.setCliente(cliente);
         protocolo.setCanal(canais);
         protocolo.setTipoProtocolo(tpProtocolo);
         protocolo.setNumeroProtocolo(protocoloDTO.getNumeroProtocolo());
@@ -52,4 +44,7 @@ public class ProtocoloService {
             throw new RuntimeException("Erro ao salvar o protocolo: " + e.getMessage());
         }
     }
-}
+
+    
+
+}//class

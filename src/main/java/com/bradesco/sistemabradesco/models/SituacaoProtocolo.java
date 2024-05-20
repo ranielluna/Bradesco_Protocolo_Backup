@@ -1,5 +1,6 @@
 package com.bradesco.sistemabradesco.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import org.springframework.beans.BeanUtils;
@@ -17,7 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "situacaoProtocolo")
-public class SituacaoProtocolo {
+public class SituacaoProtocolo implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento
   private int codigo;

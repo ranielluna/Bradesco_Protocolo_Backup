@@ -11,20 +11,13 @@ import com.bradesco.sistemabradesco.repository.FuncionarioRepository;
 
 @Service
 public class FuncionarioService {
-  @SuppressWarnings("unused")
+  // @SuppressWarnings("unused")
   @Autowired
   private FuncionarioRepository funcionarioRepository;
 
-
-  // -- METODO PARA AUTENTICAÇÃOO DE UM FUNCIONARIO
- // public boolean autenticarPorCodigoAcesso(String codigo) {
-    //     Funcionario funcionario = funcionarioRepository.findByCodigo(codigo);
-    //     if (funcionario != null) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
+  // public FuncionarioService(FuncionarioRepository funcionarioRepository){
+  //   this.funcionarioRepository=funcionarioRepository;
+  // }
   
   public List<FuncionarioDTO> listarFuncionarios(){
     List<Funcionario> funcionarios = funcionarioRepository.findAll();

@@ -20,6 +20,9 @@ public class CargoController {
     
     @Autowired
     private CargoService cargoService;
+    // public CargoController(CargoService cargoService){
+    //     this.cargoService=cargoService;
+    // }
 
     @GetMapping("/listar")
     public List<Cargo> listarCargos() {

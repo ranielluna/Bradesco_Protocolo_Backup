@@ -1,7 +1,7 @@
 package com.bradesco.sistemabradesco.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +18,10 @@ public class FuncionarioController {
     
     @Autowired
     private FuncionarioRepository repository;
+
+    // public FuncionarioController(FuncionarioRepository repository){
+    //     this.repository=repository;
+    // }
 
     
     // login codigos = i025368 - i054867 - i147857

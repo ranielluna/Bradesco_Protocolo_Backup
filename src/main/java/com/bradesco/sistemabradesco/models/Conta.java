@@ -1,5 +1,7 @@
 package com.bradesco.sistemabradesco.models;
 
+import java.io.Serializable;
+
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.dto.ContaDTO;
@@ -16,7 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "conta")
-public class Conta {
+public class Conta implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int codigo;

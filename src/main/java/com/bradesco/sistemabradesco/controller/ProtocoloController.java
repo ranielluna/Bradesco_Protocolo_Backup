@@ -19,8 +19,12 @@ import com.bradesco.sistemabradesco.services.ProtocoloService;
 @RequestMapping("/api/protocolo")
 public class ProtocoloController {
 
-  @Autowired
+	@Autowired
 	private ProtocoloRepository repository;
+
+	// public ProtocoloController(ProtocoloRepository repository){
+	// 	this.repository=repository;
+	// }
 
 	@GetMapping
 	public String paginaInicial() {

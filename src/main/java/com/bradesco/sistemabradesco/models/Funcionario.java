@@ -1,5 +1,7 @@
 package com.bradesco.sistemabradesco.models;
 
+import java.io.Serializable;
+
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.dto.FuncionarioDTO;
@@ -15,7 +17,7 @@ import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "funcionario")
-public class Funcionario {
+public class Funcionario implements Serializable{
   @Id
   @Column(name="codigo")
   private String codigo;

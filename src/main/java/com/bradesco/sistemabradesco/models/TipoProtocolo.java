@@ -1,5 +1,7 @@
 package com.bradesco.sistemabradesco.models;
 
+import java.io.Serializable;
+
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.dto.TipoProtocoloDTO;
@@ -13,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tipoProtocolo")
-public class TipoProtocolo {
+public class TipoProtocolo implements Serializable {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento

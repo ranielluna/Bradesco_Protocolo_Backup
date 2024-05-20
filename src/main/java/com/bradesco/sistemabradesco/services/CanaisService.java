@@ -4,6 +4,7 @@ import com.bradesco.sistemabradesco.dto.CanaisDTO;
 import com.bradesco.sistemabradesco.models.Canais;
 import com.bradesco.sistemabradesco.repository.CanaisRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,13 @@ import java.util.List;
 @Service
 public class CanaisService {
 
-    private final CanaisRepository canaisRepository;
+    @Autowired
+    private CanaisRepository canaisRepository;
 
-    //@Autowired
-    public CanaisService(CanaisRepository canaisRepository) {
-       this.canaisRepository = canaisRepository;
-    }
+   
+    // public CanaisService(CanaisRepository canaisRepository) {
+    //    this.canaisRepository = canaisRepository;
+    // }
 
     public List<Canais> listarCanais() {
         return canaisRepository.findAll();

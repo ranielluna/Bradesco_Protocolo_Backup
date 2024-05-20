@@ -1,5 +1,7 @@
 package com.bradesco.sistemabradesco.models;
 
+import java.io.Serializable;
+
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.dto.CargoDTO;
@@ -13,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cargo")
-public class Cargo {
+public class Cargo implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento
   private int codigo;

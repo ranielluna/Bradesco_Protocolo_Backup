@@ -1,5 +1,7 @@
 package com.bradesco.sistemabradesco.models;
 
+import java.io.Serializable;
+
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.dto.CanaisDTO;
@@ -13,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "canais")
-public class Canais {
+public class Canais implements Serializable{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento
   private int codigo;

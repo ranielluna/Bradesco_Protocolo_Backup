@@ -1,6 +1,8 @@
 package com.bradesco.sistemabradesco.models;
 
 
+import java.io.Serializable;
+
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.dto.TipoTelefoneDTO;
@@ -10,13 +12,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tipoTelefone")
-public class TipoTelefone {
+public class TipoTelefone implements Serializable{
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento
@@ -24,10 +24,6 @@ public class TipoTelefone {
 
   @Column(name = "tipo", length=20, nullable = false)
   private String tipo;
-
-  @OneToOne
-  @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
-  private Cliente cliente;
 
 
   
@@ -53,14 +49,7 @@ public class TipoTelefone {
     this.tipo = tipo;
   }
 
-  public Cliente getCliente() {
-    return cliente;
-  }
-
-  public void setCliente(Cliente cliente) {
-    this.cliente = cliente;
-  }
-
+  
   @Override
   public int hashCode() {
     final int prime = 31;

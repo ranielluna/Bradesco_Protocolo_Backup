@@ -18,6 +18,10 @@ public class ClienteDTO{
         BeanUtils.copyProperties(cliente, this);
     }
 
+    public ClienteDTO(){
+      
+    }
+
     //GETTERS E SETTERS
   public String getCpf() {
     return cpf;

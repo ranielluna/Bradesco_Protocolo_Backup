@@ -21,6 +21,10 @@ public class CanaisController {
     @Autowired
     private CanaisService canaisService;
 
+    // public CanaisController(CanaisService canaisService){
+    //     this.canaisService=canaisService;
+    // }
+
     @GetMapping("/listar")
     public List<Canais> listarCanais() {
         return canaisService.listarCanais();

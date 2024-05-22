@@ -19,6 +19,10 @@ import com.bradesco.sistemabradesco.models.Funcionario;
 import com.bradesco.sistemabradesco.repository.FuncionarioRepository;
 import com.bradesco.sistemabradesco.services.FuncionarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 
 @RestController
 @RequestMapping("/api/acesso")
@@ -38,7 +42,14 @@ public class FuncionarioController {
     // login codigos = i025368 - i054867 - i147857
     //senha = 010203
 
-    
+    @Operation(description = "Permite que um funcionário faça o login no sistema.")
+      @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Acesso Liberado."),
+        @ApiResponse(responseCode = "404", description = "Acesso negado. Dados inválidos."),
+        @ApiResponse(responseCode="405", description="Acesso negado. Usuário não encontrado." )
+     }
+    )
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Funcionario funcionario) {
         String codigo = funcionario.getCodigo();
@@ -59,6 +70,13 @@ public class FuncionarioController {
     }
     
     /* criando funcionario */
+    @Operation(description = "Cria um funcionário na aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna o funcionário com suas informações."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @PostMapping("/criar")
     public Funcionario criarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO){
         return funcionarioService.criarFuncionario(funcionarioDTO);
@@ -70,7 +88,14 @@ public class FuncionarioController {
     //   public Conta criarConta(@RequestBody ContaDTO contaDTO){
     //       return contaService.criarConta(contaDTO);
     //   }
-     
+    
+    @Operation(description = "Deleta um funcionário da aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Remove um funcionário e mostra uma mensagem de sucesso."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarFuncionario(@PathVariable String codigo){
         funcionarioService.deletarFuncionario(codigo);

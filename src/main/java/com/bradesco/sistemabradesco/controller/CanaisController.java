@@ -18,6 +18,10 @@ import com.bradesco.sistemabradesco.dto.CanaisDTO;
 import com.bradesco.sistemabradesco.models.Canais;
 import com.bradesco.sistemabradesco.services.CanaisService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 
 @RestController
 @RequestMapping("/canais")
@@ -26,21 +30,36 @@ public class CanaisController {
     @Autowired
     private CanaisService canaisService;
 
-    // public CanaisController(CanaisService canaisService){
-    //     this.canaisService=canaisService;
-    // }
+    /* usando as anotações swagger */
+    @Operation(description = "Lista os canais que existem na aplicação.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Retorna os canais existentes."),
+        @ApiResponse(responseCode = "400", description = "Canais não encontrados.")
+    }
 
+    )
     @GetMapping("/listar")
     public List<Canais> listarCanais() {
         return canaisService.listarCanais();
     }
 
+    @Operation(description = "Cria um novo canal para a aplicação.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode="200", description = "Retorna o canal que foi criado com suas informações."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+    }
+
+    )
     @PostMapping("/criar")
     public Canais criarCanal(@RequestBody CanaisDTO canaisDTO) {
         return canaisService.criarCanal(canaisDTO);
     }
 
-    // deletar    
+
+    @Operation(description = "Deleta um canal por meio do seu codigo.")  
+    @ApiResponses(
+        @ApiResponse(responseCode = "200", description = "Canal deletado com sucesso!")
+    ) 
     @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarTipoTelefone(@PathVariable int codigo){
         canaisService.deletarCanal(codigo);

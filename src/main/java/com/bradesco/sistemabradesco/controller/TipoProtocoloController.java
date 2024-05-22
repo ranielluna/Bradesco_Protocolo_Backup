@@ -19,6 +19,10 @@ import com.bradesco.sistemabradesco.models.TipoProtocolo;
 import com.bradesco.sistemabradesco.repository.TipoProtocoloRepository;
 import com.bradesco.sistemabradesco.services.TipoProtocoloService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("api/tipoProtocolo")
 public class TipoProtocoloController {
@@ -26,25 +30,30 @@ public class TipoProtocoloController {
   @Autowired
   private TipoProtocoloRepository repository;
 
-  // public TipoProtocoloController(TipoProtocoloRepository repository){
-  //   this.repository=repository;
-  // }
-  
   @Autowired
   private TipoProtocoloService service;
 
-  // public TipoProtocoloController(TipoProtocoloService service){
-  //   this.service=service;
-  // }
-
-
   // listar
+  @Operation(description = "Lista todos os tipos de protocolo da aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna uma ArrayList com todos os tipos de protocolo."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
   @GetMapping("/lista")
   public List<TipoProtocolo> listarTipoProtocolos(){
     List<TipoProtocolo> tipoProtocolos = repository.findAll();
     return tipoProtocolos;
   }
   // filtrar 
+  @Operation(description = "Filtra os Tipos de protocolos pelo código deles.")
+  @ApiResponses({
+
+    @ApiResponse(responseCode = "200", description = "Retorna um tipo de protocolo com o seu código."),
+    @ApiResponse(responseCode = "400", description = "Bad request.")
+ }
+)
   @GetMapping(value = "/{codigo}")
   public TipoProtocolo findByCodigo(@PathVariable Integer codigo){
     TipoProtocolo result = repository.findByCodigo(codigo);
@@ -52,12 +61,25 @@ public class TipoProtocoloController {
   }
 
   // criar
+  @Operation(description = "Cria um novo tipo de protocolo na aplicação")
+  @ApiResponses({
+
+    @ApiResponse(responseCode = "200", description = "Retorna o tipo de protocolo criado com as suas informações."),
+    @ApiResponse(responseCode = "400", description = "Bad request.")
+ }
+)
   @PostMapping("/criarTipoProtocolo")
   public TipoProtocolo criarTipoProtocolo(@RequestBody TipoProtocoloDTO tipoProtocoloDTO){
     return service.criarTipoProtocolo(tipoProtocoloDTO);
   }
 
-   
+  @Operation(description = "Deleta um tipo de  protocolo da aplicação")
+  @ApiResponses({
+
+    @ApiResponse(responseCode = "200", description = "Remove um tipo de protocolo e existe uma mensagem de sucesso."),
+    @ApiResponse(responseCode = "400", description = "Bad request.")
+ }
+)
     @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarTipoProtocolo(@PathVariable int codigo){
         service.deletarTipoProtocolo(codigo);

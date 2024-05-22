@@ -18,6 +18,10 @@ import com.bradesco.sistemabradesco.dto.DepartarmentoDTO;
 import com.bradesco.sistemabradesco.models.Departamento;
 import com.bradesco.sistemabradesco.services.DepartamentoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/departamento")
 public class DepartamentoController {
@@ -25,19 +29,28 @@ public class DepartamentoController {
     @Autowired
     private DepartamentoService departamentoService;
 
-    // public DepartamentoController(DepartamentoService departamentoService){
-    //     this.departamentoService=departamentoService;
-    // }
-
-
-
+  
     /* criando Departamento */
+    @Operation(description = "Cria um departamento na aplicação.")
+      @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna o departamento com suas informações."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @PostMapping("/criar")
     public Departamento criarDepartamento(@RequestBody DepartarmentoDTO departarmentoDTO){
         return departamentoService.criarDepartamento(departarmentoDTO);
     }
 
     /* deletando departamento */
+    @Operation(description = "Deleta um departamento da aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Remove um departamento da aplicação e mostra uma mensagem de sucesso!."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarDepartamento(@PathVariable int codigo){
         departamentoService.deletarDepartamento(codigo);
@@ -47,6 +60,13 @@ public class DepartamentoController {
     }
 
     /* Listar Departamentos */
+    @Operation(description = "Lista todos os departamentos existentes na aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os departamentos existentes."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @GetMapping("/listar")
     public List<Departamento> listaDepartamentos(){
         return departamentoService.listarDepartamentos();

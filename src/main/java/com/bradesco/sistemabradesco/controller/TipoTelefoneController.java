@@ -18,6 +18,10 @@ import com.bradesco.sistemabradesco.models.TipoTelefone;
 import com.bradesco.sistemabradesco.repository.TipoTelefoneRepository;
 import com.bradesco.sistemabradesco.services.TipoTelefoneService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 
 @RestController
 @RequestMapping("api/tipoTelefone")
@@ -26,18 +30,17 @@ public class TipoTelefoneController {
   @Autowired
   private TipoTelefoneRepository repository;
 
-  // public TipoTelefoneController(TipoTelefoneRepository repository){
-  //   this.repository=repository;
-  // }
-
   @Autowired
   private TipoTelefoneService service;
 
-  // public TipoTelefoneController(TipoTelefoneService service){
-  //   this.service=service;
-  // }
-
   // listar
+  @Operation(description = "Lista os tipos de telefone presentes na aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna uma ArrayList com todos os tipos de telefone."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
   @GetMapping("/lista")
   public List<TipoTelefone> listarTipoTelefones(){
     List<TipoTelefone> tipoTelefones = repository.findAll();
@@ -45,18 +48,38 @@ public class TipoTelefoneController {
   }
 
   // filtrar 
+  @Operation(description = "Filtra os tipos de telefones por meio do código deles.")
+  @ApiResponses({
+
+    @ApiResponse(responseCode = "200", description = "Retorna um tipo de telefone por meio do código deles."),
+    @ApiResponse(responseCode = "400", description = "Bad request.")
+ }
+)
   @GetMapping(value = "/{codigo}")
   public TipoTelefone findByCodigo(@PathVariable Integer codigo){
   TipoTelefone result = repository.findByCodigo(codigo);
   return result;
 }
   // criar
+  @Operation(description = "Cria um novo tipo de telefone na aplicação.")
+  @ApiResponses({
+
+    @ApiResponse(responseCode = "200", description = "Retorna apenas um objeto tipo de telefone com as suas informações."),
+    @ApiResponse(responseCode = "400", description = "Bad request.")
+ }
+)
   public TipoTelefone criarTipoTelefone(@RequestBody TipoTelefoneDTO tipoTelefoneDTO){
     return service.criarTipoTelefone(tipoTelefoneDTO);
   }
 
   // deletar
-   
+    @Operation(description = "Deleta um tipo de telefone da aplicação.")
+    @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Remove um objeto tipoTelefone por meio do seu código e exime uma mensagem de sucesso."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+   }
+  )
     @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarTipoTelefone(@PathVariable int codigo){
         service.deletarTipoTelefone(codigo);

@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bradesco.sistemabradesco.dto.ContaDTO;
 import com.bradesco.sistemabradesco.services.ContaService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import com.bradesco.sistemabradesco.repository.ContaRepository;
 import com.bradesco.sistemabradesco.models.Conta;
 
@@ -28,23 +33,30 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
-    // public ContaController(ContaService contaService){
-    //     this.contaService=contaService;
-    // }
     @Autowired
     private ContaRepository contaRepository; 
-
-    // public ContaController(ContaRepository contaRepository){
-    //     this.contaRepository=contaRepository;
-    // }
-    
+  
     /* criando conta */
+    @Operation(description = "Cria uma conta na aplicação.")
+      @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna a conta com suas informações."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @PostMapping("/criar")
     public Conta criarConta(@RequestBody ContaDTO contaDTO){
         return contaService.criarConta(contaDTO);
     }
 
     /* deletando conta */
+    @Operation(description = "Deleta uma conta da aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Remove a conta e exite uma mensagem de sucesso."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarConta(@PathVariable int codigo){
         contaService.deletarConta(codigo);
@@ -55,12 +67,26 @@ public class ContaController {
     }
 
     /* Listando contas*/
+    @Operation(description = "Lista todas as contas da aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna um array list com as contas e seus dados."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @GetMapping("/listar")
     public List<Conta> listarContas(){
         return contaService.listarContas();
     }
      
     /* encontrando conta por codigo*/
+    @Operation(description = "Encontra uma conta por meio do código dela.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna apenas uma conta com seu código."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @GetMapping("/{codigo}")
     public ResponseEntity<ContaDTO> encontrarPorCodigo(@PathVariable int codigo){
         Conta conta = contaService.encontrarPorCodigo(codigo);
@@ -71,6 +97,13 @@ public class ContaController {
     }
 
     /* encontrando conta por numero */
+    @Operation(description = "Encontra uma conta por meio do numero dela.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna apenas uma conta com o seu número."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @GetMapping("/{numero}")
     public ResponseEntity<ContaDTO> encontrarPorNumero(@PathVariable int numero){
         Conta conta = contaService.encontrarPorNumero(numero);
@@ -79,6 +112,14 @@ public class ContaController {
         }
         return ResponseEntity.ok(new ContaDTO(conta));
     }
+
+    @Operation(description = "Encontra uma conta por meio da agência dela.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna apenas uma conta com a agência."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
     @GetMapping("/{agencia}")
     public ResponseEntity<List<Conta>> encontrarPorAgencia(@PathVariable Integer agencia){
         List<Conta> contas = contaRepository.findByAgencia(agencia);

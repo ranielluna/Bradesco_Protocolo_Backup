@@ -9,6 +9,8 @@ import com.bradesco.sistemabradesco.dto.TipoProtocoloDTO;
 import com.bradesco.sistemabradesco.models.TipoProtocolo;
 import com.bradesco.sistemabradesco.repository.TipoProtocoloRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class TipoProtocoloService {
   
@@ -40,5 +42,12 @@ public class TipoProtocoloService {
         throw new IllegalArgumentException("O preenchimento dos campos é obrigatório.");
       }
     }
+
+        /* deletar conta */
+    @Transactional
+    public void deletarTipoProtocolo(int codigo){
+        repository.deleteById(codigo);
+    }
+
 
 }

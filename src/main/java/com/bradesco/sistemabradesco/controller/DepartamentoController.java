@@ -37,12 +37,12 @@ public class DepartamentoController {
         return departamentoService.criarDepartamento(departarmentoDTO);
     }
 
-    /* deletando cliente */
-    @DeleteMapping("/deletar/{id}")
+    /* deletando departamento */
+    @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarDepartamento(@PathVariable int codigo){
         departamentoService.deletarDepartamento(codigo);
         Map<String, String> message = new HashMap<>();
-        message.put("message", "Cliente deletado com sucesso");
+        message.put("message", "Departamento deletado com sucesso");
         return ResponseEntity.ok(message);
     }
 

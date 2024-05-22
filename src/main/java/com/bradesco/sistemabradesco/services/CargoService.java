@@ -6,6 +6,8 @@ import com.bradesco.sistemabradesco.dto.CargoDTO;
 import com.bradesco.sistemabradesco.models.Cargo;
 import com.bradesco.sistemabradesco.repository.CargoRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,4 +32,10 @@ public class CargoService {
         cargo.setCargo(cargoDTO.getCargo());
         return cargoRepository.save(cargo);
     }
+
+    @Transactional
+    public void deletarCargo(int codigo){
+        cargoRepository.deleteById(codigo);
+    }
+
 }

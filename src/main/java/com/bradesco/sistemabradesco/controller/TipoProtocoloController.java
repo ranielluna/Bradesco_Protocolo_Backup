@@ -1,8 +1,12 @@
 package com.bradesco.sistemabradesco.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,4 +56,14 @@ public class TipoProtocoloController {
   public TipoProtocolo criarTipoProtocolo(@RequestBody TipoProtocoloDTO tipoProtocoloDTO){
     return service.criarTipoProtocolo(tipoProtocoloDTO);
   }
+
+   
+    @DeleteMapping("/deletar/{codigo}")
+    public ResponseEntity<Object> deletarTipoProtocolo(@PathVariable int codigo){
+        service.deletarTipoProtocolo(codigo);
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "TipoProtocolo deletado com sucesso!");
+        return ResponseEntity.ok(message);
+
+    }
 }

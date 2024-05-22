@@ -3,6 +3,9 @@ package com.bradesco.sistemabradesco.services;
 import com.bradesco.sistemabradesco.dto.CanaisDTO;
 import com.bradesco.sistemabradesco.models.Canais;
 import com.bradesco.sistemabradesco.repository.CanaisRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,11 @@ public class CanaisService {
         Canais novoCanal = new Canais();
         BeanUtils.copyProperties(canaisDTO, novoCanal);
         return canaisRepository.save(novoCanal);
+    }
+
+    @Transactional
+    public void deletarCanal(int codigo){
+        canaisRepository.deleteById(codigo);
     }
 
     // Outros métodos do serviço de canais (se houver)

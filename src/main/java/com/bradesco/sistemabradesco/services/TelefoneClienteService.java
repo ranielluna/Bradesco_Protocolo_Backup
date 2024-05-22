@@ -11,6 +11,8 @@ import com.bradesco.sistemabradesco.models.TelefoneCliente;
 import com.bradesco.sistemabradesco.models.TipoTelefone;
 import com.bradesco.sistemabradesco.repository.TelefoneClienteRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class TelefoneClienteService {
   
@@ -50,4 +52,11 @@ public class TelefoneClienteService {
       throw new IllegalArgumentException("O preenchimento dos campos é obrigatório.");
     }
   }
+
+    
+    @Transactional
+    public void deletarTelefoneCliente(int codigo){
+        repository.deleteById(codigo);
+    }
+
 }

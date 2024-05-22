@@ -10,6 +10,8 @@ import com.bradesco.sistemabradesco.models.Protocolo;
 import com.bradesco.sistemabradesco.models.TipoProtocolo;
 import com.bradesco.sistemabradesco.repository.ProtocoloRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ProtocoloService {
 
@@ -46,5 +48,9 @@ public class ProtocoloService {
     }
 
     
+       @Transactional
+    public void deletarProtocolo(int codigo){
+        protocoloRepository.deleteById(codigo);
+    }
 
 }//class

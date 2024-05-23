@@ -4,16 +4,16 @@ import java.time.LocalDate;
 
 import org.springframework.beans.BeanUtils;
 
-import com.bradesco.sistemabradesco.models.Funcionario;
-import com.bradesco.sistemabradesco.models.Protocolo;
+import com.bradesco.sistemabradesco.models.Employee;
+import com.bradesco.sistemabradesco.models.Protocol;
 import com.bradesco.sistemabradesco.models.SituacaoProtocolo;
 
 
 public class SituacaoProtocoloDTO {
 
   private int codigo;
-  private Funcionario funcionario;
-  private Protocolo protocolo;
+  private Employee funcionario;
+  private Protocol protocolo;
   private String respostaProtocolo;
   private LocalDate dataRecebimento;
   private LocalDate dataUltimaAcao;
@@ -33,19 +33,19 @@ public class SituacaoProtocoloDTO {
     this.codigo = codigo;
   }
 
-  public Funcionario getFuncionario() {
+  public Employee getFuncionario() {
     return funcionario;
   }
 
-  public void setFuncionario(Funcionario funcionario) {
+  public void setFuncionario(Employee funcionario) {
     this.funcionario = funcionario;
   }
 
-  public Protocolo getProtocolo() {
+  public Protocol getProtocolo() {
     return protocolo;
   }
 
-  public void setProtocolo(Protocolo protocolo) {
+  public void setProtocolo(Protocol protocolo) {
     this.protocolo = protocolo;
   }
 

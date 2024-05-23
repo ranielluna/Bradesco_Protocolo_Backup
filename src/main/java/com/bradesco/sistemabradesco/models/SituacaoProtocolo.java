@@ -25,11 +25,11 @@ public class SituacaoProtocolo implements Serializable {
 
   @ManyToOne
   @JoinColumn(name = "funcionario_codigo", referencedColumnName = "codigo")
-  private Funcionario funcionario;
+  private Employee funcionario;
 
   @ManyToOne
   @JoinColumn(name = "protocolo_codigo", referencedColumnName = "codigo")
-  private Protocolo protocolo;
+  private Protocol protocolo;
 
   @Column(name = "resposta_protocolo", length = 2500)
   private String respostaProtocolo;
@@ -61,22 +61,22 @@ public class SituacaoProtocolo implements Serializable {
   }
 
 
-  public Funcionario getFuncionario() {
+  public Employee getFuncionario() {
     return funcionario;
   }
 
 
-  public void setFuncionario(Funcionario funcionario) {
+  public void setFuncionario(Employee funcionario) {
     this.funcionario = funcionario;
   }
 
 
-  public Protocolo getProtocolo() {
+  public Protocol getProtocolo() {
     return protocolo;
   }
 
 
-  public void setProtocolo(Protocolo protocolo) {
+  public void setProtocolo(Protocol protocolo) {
     this.protocolo = protocolo;
   }
 

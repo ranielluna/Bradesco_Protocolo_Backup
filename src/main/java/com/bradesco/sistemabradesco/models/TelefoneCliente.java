@@ -31,7 +31,7 @@ public class TelefoneCliente implements Serializable{
 
   @OneToOne
   @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf")
-  private Cliente cliente;
+  private Client cliente;
 
   @OneToOne
   @JoinColumn(name = "tipo_telefone_codigo", referencedColumnName = "codigo")
@@ -69,11 +69,11 @@ public class TelefoneCliente implements Serializable{
     this.numero = numero;
   }
 
-  public Cliente getCliente() {
+  public Client getCliente() {
     return cliente;
   }
 
-  public void setCliente(Cliente cliente) {
+  public void setCliente(Client cliente) {
     this.cliente = cliente;
   }
 

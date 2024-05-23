@@ -2,7 +2,7 @@ package com.bradesco.sistemabradesco.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import com.bradesco.sistemabradesco.models.Cliente;
+import com.bradesco.sistemabradesco.models.Client;
 import com.bradesco.sistemabradesco.models.TelefoneCliente;
 import com.bradesco.sistemabradesco.models.TipoTelefone;
 
@@ -11,7 +11,7 @@ public class TelefoneClienteDTO {
   private int codigo;
   private int ddd;
   private int numero;
-  private Cliente cliente;
+  private Client cliente;
   private TipoTelefone tipoTelefone;
 
   public TelefoneClienteDTO(TelefoneCliente telefoneCliente){
@@ -45,11 +45,11 @@ public class TelefoneClienteDTO {
     this.numero = numero;
   }
 
-  public Cliente getCliente() {
+  public Client getCliente() {
     return cliente;
   }
 
-  public void setCliente(Cliente cliente) {
+  public void setCliente(Client cliente) {
     this.cliente = cliente;
   }
 

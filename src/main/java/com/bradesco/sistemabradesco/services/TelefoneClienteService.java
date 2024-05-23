@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bradesco.sistemabradesco.dto.TelefoneClienteDTO;
-import com.bradesco.sistemabradesco.models.Cliente;
+import com.bradesco.sistemabradesco.models.Client;
 import com.bradesco.sistemabradesco.models.TelefoneCliente;
 import com.bradesco.sistemabradesco.models.TipoTelefone;
 import com.bradesco.sistemabradesco.repository.TelefoneClienteRepository;
@@ -35,7 +35,7 @@ public class TelefoneClienteService {
       telefoneCliente.setDdd(telefoneClienteDTO.getDdd());
       telefoneCliente.setNumero(telefoneClienteDTO.getNumero());
 
-      Cliente cliente = telefoneClienteDTO.getCliente();
+      Client cliente = telefoneClienteDTO.getCliente();
       telefoneCliente.setCliente(cliente);
 
       TipoTelefone tipoTelefone = telefoneClienteDTO.getTipoTelefone();

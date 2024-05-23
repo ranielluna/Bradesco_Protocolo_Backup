@@ -33,11 +33,6 @@ public class FuncionarioController {
 
     @Autowired
     private FuncionarioService funcionarioService;
-
-    // public FuncionarioController(FuncionarioRepository repository){
-    //     this.repository=repository;
-    // }
-
     
     // login codigos = i025368 - i054867 - i147857
     //senha = 010203
@@ -83,11 +78,6 @@ public class FuncionarioController {
         
     }
     
-    //   /* criando conta */
-    //   @PostMapping("/criar")
-    //   public Conta criarConta(@RequestBody ContaDTO contaDTO){
-    //       return contaService.criarConta(contaDTO);
-    //   }
     
     @Operation(description = "Deleta um funcionário da aplicação.")
     @ApiResponses({

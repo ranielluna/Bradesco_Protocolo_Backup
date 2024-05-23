@@ -6,10 +6,10 @@ import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.models.Employee;
 import com.bradesco.sistemabradesco.models.Protocol;
-import com.bradesco.sistemabradesco.models.SituacaoProtocolo;
+import com.bradesco.sistemabradesco.models.SituationProtocol;
 
 
-public class SituacaoProtocoloDTO {
+public class SituationProtocolDTO {
 
   private int codigo;
   private Employee funcionario;
@@ -18,11 +18,11 @@ public class SituacaoProtocoloDTO {
   private LocalDate dataRecebimento;
   private LocalDate dataUltimaAcao;
 
-  public SituacaoProtocoloDTO(SituacaoProtocolo situacaoProtocolo){
-    BeanUtils.copyProperties(situacaoProtocolo, this);
+  public SituationProtocolDTO(SituationProtocol situationProtocol){
+    BeanUtils.copyProperties(situationProtocol, this);
   }
 
-  public SituacaoProtocoloDTO(){
+  public SituationProtocolDTO(){
   }
 
   public int getCodigo() {

@@ -19,6 +19,10 @@ import com.bradesco.sistemabradesco.models.Employee;
 import com.bradesco.sistemabradesco.repository.EmployeeRepository;
 import com.bradesco.sistemabradesco.services.EmployeeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 
 @RestController
 @RequestMapping("/api/employee")
@@ -29,12 +33,20 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-
     
     // login codigos = i025368 - i054867 - i147857
     //senha = 010203
-    @PostMapping("/loginEmployee")
-    public ResponseEntity<String> loginEmployee(@RequestBody Employee employee) {
+
+    @Operation(description = "Permite que um funcionário faça o login no sistema.")
+      @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Acesso Liberado."),
+        @ApiResponse(responseCode = "404", description = "Acesso negado. Dados inválidos."),
+        @ApiResponse(responseCode="405", description="Acesso negado. Usuário não encontrado." )
+     }
+    )
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Employee employee) {
         String codigo = employee.getCodigo();
         String senha = employee.getSenha();
         
@@ -53,20 +65,30 @@ public class EmployeeController {
     }
     
     /* criando funcionario */
-    @PostMapping("/addEmployee")
+
+    @Operation(description = "Cria um funcionário na aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna o funcionário com suas informações."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
+    @PostMapping("/criar")
     public Employee addEmployee(@RequestBody EmployeeDTO employeeDTO){
         return employeeService.addEmployee(employeeDTO);
         
     }
     
-    //   /* criando conta */
-    //   @PostMapping("/criar")
-    //   public Conta criarConta(@RequestBody ContaDTO contaDTO){
-    //       return contaService.criarConta(contaDTO);
-    //   }
-     
-    @DeleteMapping("/delete/{codigo}")
-    public ResponseEntity<Object> deleteEmployee(@PathVariable String codigo){
+    
+    @Operation(description = "Deleta um funcionário da aplicação.")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Remove um funcionário e mostra uma mensagem de sucesso."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
+    @DeleteMapping("/deletar/{codigo}")
+    public ResponseEntity<Object> deletarFuncionario(@PathVariable String codigo){
         employeeService.deleteEmployee(codigo);
         Map<String, String> message = new HashMap<>();
         message.put("message", "Funcionário deletado com sucesso!");

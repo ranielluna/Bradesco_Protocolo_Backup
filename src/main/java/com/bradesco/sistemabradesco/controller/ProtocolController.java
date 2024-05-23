@@ -19,6 +19,10 @@ import com.bradesco.sistemabradesco.models.Protocol;
 import com.bradesco.sistemabradesco.repository.ProtocolRepository;
 import com.bradesco.sistemabradesco.services.ProtocolService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 
 @RestController
 @RequestMapping("/api/protocol")
@@ -38,24 +42,57 @@ public class ProtocolController {
 	}
 
 
+
+	@Operation(description = "Lista todos protocolos da aplicação.")
+	  @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna uma lista de todos os protocolos."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
 	@GetMapping("/listProtocols")
 	public List<Protocol> listProtocols(){
 		List<Protocol> Protocols = protocolRepository.findAll();
 		return Protocols;
 	}
 
-	@GetMapping(value = "/{codigo}")
-	public Protocol findByCodigo(@PathVariable Integer codigo) {
-		Protocol result = protocolRepository.findByCodigo(codigo);
+
+	@Operation(description = "Encontra um protocolo por meio do Código dele.")
+	@ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna apenas um protocolo com o código dele."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
+	@GetMapping(value = "/{code}")
+	public Protocol findByCodigo(@PathVariable Integer code) {
+		Protocol result = protocolRepository.findByCodigo(code);
 		return result;
 	}
 
+
+	@Operation(description = "Encontra um protocolo pelo numero dele.")
+	@ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna apenas um protocolo com o número dele."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
 	@GetMapping(value = "/number/{numeroProtocolo}")
 	public Protocol findByNumeroProtocolo(@PathVariable Long numeroProtocolo) {
 		Protocol result = protocolRepository.findByNumeroProtocolo(numeroProtocolo);
 		return result;
 	}
 
+
+
+	@Operation(description = "Cria um protocolo na aplicação.")
+	@ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna o protocolo criado com as suas informações."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+		)
     @PostMapping("/openProtocol")
     public Protocol openProtocol(@RequestBody ProtocolDTO protocolDTO) {
         return protocoloService.openProtocol(protocolDTO);
@@ -63,6 +100,13 @@ public class ProtocolController {
     }
 
 	 
+		@Operation(description = "Deleta um protocolo da aplicação.")
+		@ApiResponses({
+	
+					@ApiResponse(responseCode = "200", description = "Remove um protocolo e exibe uma mensagem de sucesso."),
+					@ApiResponse(responseCode = "400", description = "Bad request.")
+			 }
+			) 
     @DeleteMapping("/delete/{codigo}")
     public ResponseEntity<Object> deleteProtocol(@PathVariable int codigo){
         protocoloService.deleteProtocol(codigo);

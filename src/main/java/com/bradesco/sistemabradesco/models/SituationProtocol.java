@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import org.springframework.beans.BeanUtils;
 
-import com.bradesco.sistemabradesco.dto.SituacaoProtocoloDTO;
+import com.bradesco.sistemabradesco.dto.SituationProtocolDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,9 +18,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "situacaoProtocolo")
-public class SituacaoProtocolo implements Serializable {
+public class SituationProtocol implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento
+  @Column(name = "codigo")
   private int codigo;
 
   @ManyToOne
@@ -42,10 +43,10 @@ public class SituacaoProtocolo implements Serializable {
 
   //status protocolo
   
-  public SituacaoProtocolo() {
+  public SituationProtocol() {
   }
 
-  public SituacaoProtocolo(SituacaoProtocoloDTO situacaoProtocoloDTO){
+  public SituationProtocol(SituationProtocolDTO situacaoProtocoloDTO){
     BeanUtils.copyProperties(situacaoProtocoloDTO, this);
   }
 
@@ -129,7 +130,7 @@ public class SituacaoProtocolo implements Serializable {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    SituacaoProtocolo other = (SituacaoProtocolo) obj;
+    SituationProtocol other = (SituationProtocol) obj;
     if (codigo != other.codigo)
       return false;
     return true;

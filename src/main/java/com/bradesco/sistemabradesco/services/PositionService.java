@@ -17,7 +17,7 @@ public class PositionService {
     private PositionRepository positionRepository;
 
     // Metodo de listagem de cargos existentes no Banco de dados
-    public List<Position> getPositions() {
+    public List<Position> listPositions() {
         return positionRepository.findAll();
     }
 

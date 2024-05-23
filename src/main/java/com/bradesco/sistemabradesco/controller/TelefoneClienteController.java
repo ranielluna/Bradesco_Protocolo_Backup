@@ -19,6 +19,10 @@ import com.bradesco.sistemabradesco.models.TelefoneCliente;
 import com.bradesco.sistemabradesco.repository.TelefoneClienteRepository;
 import com.bradesco.sistemabradesco.services.TelefoneClienteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("api/telefoneCliente")
 public class TelefoneClienteController {
@@ -26,18 +30,21 @@ public class TelefoneClienteController {
   @Autowired
   private TelefoneClienteRepository repository;
 
-  // public TelefoneClienteController(TelefoneClienteRepository repository){
-  //   this.repository=repository;
-  // }
-  
- 
+  @Autowired
   private TelefoneClienteService service;
 
-  public TelefoneClienteController(TelefoneClienteService service){
-    this.service=service;
-  }
+  // public TelefoneClienteController(TelefoneClienteService service){
+  //   this.service=service;
+  // }
 
   // listar
+  @Operation(description = "Lista todos os telefones de um cliente")
+    @ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna uma arrayList com todos os telefones de um cliente."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
   @GetMapping("/lista")
   public List<TelefoneCliente> listarTelefoneCliente(){
     List<TelefoneCliente> telefoneClientes = repository.findAll(); 
@@ -46,12 +53,26 @@ public class TelefoneClienteController {
   // filtrar por cliente??
 
   // criar
+  @Operation(description = "Cria um telefone para um cliente na aplicação.")
+  @ApiResponses({
+
+    @ApiResponse(responseCode = "200", description = "Retorna o telefone criado com suas informações."),
+    @ApiResponse(responseCode = "400", description = "Bad request.")
+ }
+)
   @PostMapping("/criarTelefoneCliente")
   public TelefoneCliente criarTelefoneCliente(@RequestBody TelefoneClienteDTO telefoneClienteDTO){
     return service.criarTelefoneCliente(telefoneClienteDTO);
   }
 
    // deletar
+    @Operation(description = "Deleta um telefone de um cliente na aplicação.")
+    @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Remove um telefone de um cliente e exite uma mensagem de sucesso."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+   }
+  )
     @DeleteMapping("/deletar/{codigo}")
     public ResponseEntity<Object> deletarTelefoneCliente(@PathVariable int codigo){
         service.deletarTelefoneCliente(codigo);

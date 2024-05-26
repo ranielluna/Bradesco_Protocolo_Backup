@@ -41,7 +41,7 @@ public class SituationProtocol implements Serializable {
   @Column(name = "data_ultima_acao", nullable = false)
   private LocalDate lastActionDate;
 
-  //status protocolo
+
   
   public SituationProtocol() {
   }
@@ -99,7 +99,7 @@ public class SituationProtocol implements Serializable {
   public void setLastActionDate(LocalDate lastActionDate) {
     this.lastActionDate = lastActionDate;
   }
-
+  
 
   //METODOS HASHCODE E EQUALS
   @Override

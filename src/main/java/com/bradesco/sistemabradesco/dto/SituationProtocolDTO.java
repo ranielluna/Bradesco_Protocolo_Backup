@@ -17,12 +17,17 @@ public class SituationProtocolDTO {
   private String protocolResponse; // respostaProtocolo
   private LocalDate receiptDate; // dataRecebimento
   private LocalDate lastActionDate; // dataUltimaAcao
+  
 
   public SituationProtocolDTO(SituationProtocol situationProtocol){
     BeanUtils.copyProperties(situationProtocol, this);
   }
 
   public SituationProtocolDTO(){
+  }
+  public SituationProtocolDTO(int code, String protocolResponse){
+    this.code = code;
+    this.protocolResponse = protocolResponse;
   }
 
   public int getCode() {
@@ -73,6 +78,6 @@ public class SituationProtocolDTO {
     this.lastActionDate = lastActionDate;
   }
 
-  
+
   
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bradesco.sistemabradesco.dto.ProtocolDTO;
@@ -32,9 +33,7 @@ public class ProtocolController {
 	private ProtocolRepository protocolRepository;
 
 	@Autowired
-	private ProtocolService protocoloService;
-
-
+	private ProtocolService protocolService;
 
 	@GetMapping
 	public String home() {
@@ -71,6 +70,23 @@ public class ProtocolController {
 	}
 
 
+
+	@Operation(description = "Listar protocolos pelo status.")
+	@ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna os protocolos que estão com determinado status."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
+	@GetMapping("/status")
+	public List<Protocol> listProtocolStatus(@RequestParam String status) {
+			return protocolService.listProtocolStatus(status);
+	}
+
+	//http://localhost:8080/api/protocol/status?status=Em%20an%C3%A1lise
+
+
+
 	@Operation(description = "Encontra um protocolo pelo numero dele.")
 	@ApiResponses({
 
@@ -95,7 +111,7 @@ public class ProtocolController {
 		)
     @PostMapping("/openProtocol")
     public Protocol openProtocol(@RequestBody ProtocolDTO protocolDTO) {
-        return protocoloService.openProtocol(protocolDTO);
+        return protocolService.openProtocol(protocolDTO);
 
     }
 
@@ -109,12 +125,14 @@ public class ProtocolController {
 			) 
     @DeleteMapping("/delete/{code}")
     public ResponseEntity<Object> deleteProtocol(@PathVariable int code){
-        protocoloService.deleteProtocol(code);
+        protocolService.deleteProtocol(code);
         Map<String, String> message = new HashMap<>();
         message.put("message", "Protocolo deletado com sucesso!");
         return ResponseEntity.ok(message);
 
     }
+
+
 
 
 

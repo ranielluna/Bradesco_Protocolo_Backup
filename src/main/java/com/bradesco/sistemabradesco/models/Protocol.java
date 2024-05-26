@@ -69,6 +69,9 @@ public class Protocol implements Serializable{
   @Column(name = "numero_protocolo",nullable = false)
   private Long protocolNumber;
 
+  @Column(name = "status_protocolo", nullable = false)
+  private String protocolStatus;
+  //status protocolo
 
   //CONSTRUTOR VAZIO
   public Protocol() {
@@ -193,7 +196,13 @@ public class Protocol implements Serializable{
     this.protocolNumber = protocolNumber;
   }
   
+  public String getProtocolStatus() {
+    return protocolStatus;
+  }
 
+  public void setProtocolStatus(String protocolStatus) {
+    this.protocolStatus = protocolStatus;
+  }
 
   //METODOS HASHCODE E EQUALS
   @Override

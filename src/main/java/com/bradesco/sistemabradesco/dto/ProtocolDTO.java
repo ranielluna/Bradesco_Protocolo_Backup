@@ -26,6 +26,7 @@ public class ProtocolDTO {
   private boolean due; // devido
   private boolean justified; // procedente
   private Long protocolNumber; // numeroProtocolo
+  private String protocolStatus; //status
 
   //CONSTRUTUOR DE IMPORTAÇÃO DA ENTIDADE PROTOCOLO
   public ProtocolDTO(Protocol protocol){
@@ -149,5 +150,11 @@ public class ProtocolDTO {
     this.protocolNumber = protocolNumber;
   }
 
-  
+  public String getProtocolStatus() {
+    return protocolStatus;
+  }
+
+  public void setProtocolStatus(String protocolStatus) {
+    this.protocolStatus = protocolStatus;
+  }
 }

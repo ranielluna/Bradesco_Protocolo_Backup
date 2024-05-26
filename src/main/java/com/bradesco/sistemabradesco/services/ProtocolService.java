@@ -1,6 +1,8 @@
 package com.bradesco.sistemabradesco.services;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bradesco.sistemabradesco.dto.ProtocolDTO;
@@ -38,6 +40,7 @@ public class ProtocolService {
         protocol.setChannel(channels);
         protocol.setProtocolType(protocolType);
         protocol.setProtocolNumber(protocolDTO.getProtocolNumber());
+        protocol.setProtocolStatus("Novo");
 
         try {
             return protocolRepository.save(protocol);
@@ -51,6 +54,10 @@ public class ProtocolService {
        @Transactional
     public void deleteProtocol(int code){
         protocolRepository.deleteById(code);
+    }
+
+    public List<Protocol> listProtocolStatus(String status) {
+        return protocolRepository.findByProtocolStatus(status);
     }
 
 }//class

@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "cargo")
+@Table(name = "cargos")
 public class Position implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento

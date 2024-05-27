@@ -70,7 +70,7 @@ public class SituationProtocolController {
 		SituationProtocol situationProtocol = situationProtocolService.findByProtocol(result);
 
     return situationProtocol;
-	}
+	} // alterar para listar as situações de um determinado protocolo
 
     @Operation(description = "Apresenta apenas a resposta de um determinado protocolo.")
     @ApiResponses({

@@ -12,4 +12,6 @@ public interface ProtocolRepository extends JpaRepository<Protocol, Integer>{
   Protocol findByCode(int code);
   Protocol findByProtocolNumber(Long protocolNumber);
   List<Protocol> findByProtocolStatus(String status);
+  //Protocol findByCode(int id);
+
 }

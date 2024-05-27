@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bradesco.sistemabradesco.dto.ProtocolDTO;
 import com.bradesco.sistemabradesco.models.Protocol;
+import com.bradesco.sistemabradesco.models.SituationProtocol;
 import com.bradesco.sistemabradesco.repository.ProtocolRepository;
+import com.bradesco.sistemabradesco.repository.SituationProtocolRepository;
 import com.bradesco.sistemabradesco.services.ProtocolService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +36,9 @@ public class ProtocolController {
 
 	@Autowired
 	private ProtocolService protocolService;
+
+	@Autowired
+	private SituationProtocolRepository situationProtocolRepository;
 
 	@GetMapping
 	public String home() {
@@ -71,6 +76,23 @@ public class ProtocolController {
 
 
 
+	
+	
+	@Operation(description = "Encontra um protocolo pelo numero dele.")
+	@ApiResponses({
+
+        @ApiResponse(responseCode = "200", description = "Retorna apenas um protocolo com o número dele."),
+        @ApiResponse(responseCode = "400", description = "Bad request.")
+     }
+    )
+	@GetMapping(value = "/number/{protocolNumber}")
+	public Protocol findByProtocolNumber(@PathVariable Long protocolNumber) {
+		Protocol result = protocolRepository.findByProtocolNumber(protocolNumber);
+		return result;
+	}
+	
+	
+	
 	@Operation(description = "Listar protocolos pelo status.")
 	@ApiResponses({
 
@@ -85,20 +107,6 @@ public class ProtocolController {
 
 	//http://localhost:8080/api/protocol/status?status=Em%20an%C3%A1lise
 
-
-
-	@Operation(description = "Encontra um protocolo pelo numero dele.")
-	@ApiResponses({
-
-        @ApiResponse(responseCode = "200", description = "Retorna apenas um protocolo com o número dele."),
-        @ApiResponse(responseCode = "400", description = "Bad request.")
-     }
-    )
-	@GetMapping(value = "/number/{protocolNumber}")
-	public Protocol findByProtocolNumber(@PathVariable Long protocolNumber) {
-		Protocol result = protocolRepository.findByProtocolNumber(protocolNumber);
-		return result;
-	}
 
 
 
@@ -134,7 +142,23 @@ public class ProtocolController {
 
 
 
+		@GetMapping("/responsavel/{number}")
+    public ResponseEntity<String> getEmployee(@PathVariable Long number) {
+        Protocol protocol = protocolRepository.findByProtocolNumber(number);
 
+        if (protocol != null) {
+            SituationProtocol protocolSituation = situationProtocolRepository.findByProtocol(protocol);
+
+            if (protocolSituation != null && protocolSituation.getEmployee() != null) {
+						 String nameEmployee = protocolSituation.getEmployee().getName();
+							return ResponseEntity.ok(nameEmployee);
+            } else {
+                return ResponseEntity.status(404).body("Funcionário não encontrado");
+            }
+        } else {
+            return ResponseEntity.status(404).body("Protocolo não encontrado");
+        }
+    }
 
 
 

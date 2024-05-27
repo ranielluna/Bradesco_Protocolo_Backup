@@ -1,12 +1,14 @@
 package com.bradesco.sistemabradesco.repository;
 
-// import java.util.Optional;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.bradesco.sistemabradesco.models.Protocol;
 import com.bradesco.sistemabradesco.models.SituationProtocol;
+// import java.util.List;
+
 
 @Repository
 public interface SituationProtocolRepository extends JpaRepository<SituationProtocol, Integer>{

@@ -42,6 +42,12 @@ public class ProtocolService {
         protocol.setProtocolNumber(protocolDTO.getProtocolNumber());
         protocol.setProtocolStatus("Novo");
 
+        // if(protocolDTO.getProtocolStatus() == null){
+        //     protocol.setProtocolStatus("Novo");
+        // } else{
+        //     protocol.setProtocolStatus(protocolDTO.getProtocolStatus());
+        // }
+        
         try {
             return protocolRepository.save(protocol);
         } catch (Exception e) {

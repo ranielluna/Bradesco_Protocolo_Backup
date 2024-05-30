@@ -91,4 +91,16 @@ public class SituationProtocolController {
     return responseList;
 }
 
+
+@Operation(description = "Distribui protocolos automaticamento para um funcionário de acordo com o departamento.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Protocolos atribuibo para um uncionário."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @GetMapping("/autoSituations")
+	public SituationProtocol listProtocolNotSituation() {
+		return situationProtocolService.findUnregisteredProtocols();
+	}
+
 }

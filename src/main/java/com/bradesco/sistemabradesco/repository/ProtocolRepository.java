@@ -1,6 +1,8 @@
 package com.bradesco.sistemabradesco.repository;
 
 import java.util.List;
+// import java.util.Optional;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,6 @@ public interface ProtocolRepository extends JpaRepository<Protocol, Integer>{
   Protocol findByCode(int code);
   Protocol findByProtocolNumber(Long protocolNumber);
   List<Protocol> findByProtocolStatus(String status);
-  //Protocol findByCode(int id);
+  Optional<Protocol> findById(int code);
 
 }

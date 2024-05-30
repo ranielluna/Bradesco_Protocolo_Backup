@@ -1,23 +1,31 @@
 package com.bradesco.sistemabradesco.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bradesco.sistemabradesco.dto.ProtocolDTO;
+import com.bradesco.sistemabradesco.models.Client;
+import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.models.Protocol;
 import com.bradesco.sistemabradesco.models.SituationProtocol;
+import com.bradesco.sistemabradesco.repository.ClientRepository;
+import com.bradesco.sistemabradesco.repository.DepartmentRepository;
 import com.bradesco.sistemabradesco.repository.ProtocolRepository;
 import com.bradesco.sistemabradesco.repository.SituationProtocolRepository;
 import com.bradesco.sistemabradesco.services.ProtocolService;
@@ -39,6 +47,14 @@ public class ProtocolController {
 
 	@Autowired
 	private SituationProtocolRepository situationProtocolRepository;
+
+	@Autowired
+	private DepartmentRepository departmentRepository;
+
+	@Autowired
+	private ClientRepository clientRepository;
+
+
 
 	@GetMapping
 	public String home() {
@@ -160,6 +176,75 @@ public class ProtocolController {
         }
     }
 
+	
+		//Verifica os protocolos que nao estão em situação protocolo
+		@GetMapping("/situationless")
+		public List<Protocol> listProtocolNotSituation() {
+			List<Protocol> Protocols = protocolService.findUnregistered();
+			return Protocols;
+		}
 
+
+		
+		@Operation(description = "Atualiza um protocolo na aplicação.")
+		@ApiResponses({
+				@ApiResponse(responseCode = "200", description = "Retorna o protocolo atualizado com as suas informações."),
+				@ApiResponse(responseCode = "400", description = "Bad request.")
+		})
+		@PutMapping("/update/{code}")
+		public ResponseEntity<Protocol> updateProtocol(@PathVariable int code, @RequestBody ProtocolDTO protocolDTO) {
+
+			Optional<Protocol> optionalProtocol = protocolService.findById(code);
+			if (optionalProtocol.isPresent()) {
+				Protocol protocol = optionalProtocol.get();
+	
+				if (protocolDTO.getClient() != null) {
+					Client clientDTO = protocolDTO.getClient();
+					String cpfCliente = clientDTO.getCpf();
+					Optional<Client> optionalClient = clientRepository.findById(cpfCliente);
+					Client client;
+					if (optionalClient.isPresent()) {
+						client = optionalClient.get();
+					} else {
+						client = new Client();
+						BeanUtils.copyProperties(clientDTO, client);
+						clientRepository.save(client);
+					}
+					protocol.setClient(client);
+				}
+	
+				if (protocolDTO.getInitialReceiptDate() == null) {
+					protocol.setInitialReceiptDate(LocalDate.now());
+				} else {
+					protocol.setInitialReceiptDate(protocolDTO.getInitialReceiptDate());
+				}
+	
+				if (protocolDTO.getDepartment() != null) {
+					Department departmentDTO = protocolDTO.getDepartment();
+					Optional<Department> optionalDepartment = departmentRepository.findById(departmentDTO.getCode());
+					Department department;
+					if (optionalDepartment.isPresent()) {
+						department = optionalDepartment.get();
+					} else {
+						department = new Department();
+						BeanUtils.copyProperties(departmentDTO, department);
+						departmentRepository.save(department);
+					}
+					protocol.setDepartment(department);
+				}
+	
+				protocol.setPropensaoBacen(protocolDTO.isPropensaoBacen());
+				protocol.setExpedite(protocolDTO.isExpedite());
+				protocol.setDue(protocolDTO.isDue());
+				protocol.setJustified(protocolDTO.isJustified());
+	
+				protocolService.save(protocol);
+				return ResponseEntity.ok(protocol);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		}
+	
+	
 
 }

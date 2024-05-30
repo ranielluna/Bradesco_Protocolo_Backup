@@ -94,6 +94,16 @@ public class ClientController {
         return ResponseEntity.ok(new ClientDTO(client)); 
     }
 
+    /* // buscar cliente por cpf
+    @GetMapping("/client/{id}")
+	public ResponseEntity<Client> getClientById(@PathVariable String id) {
+		Optional<Client> optionalClient = clientRepository.findById(id);
+		if (optionalClient.isPresent()) {
+			return ResponseEntity.ok(optionalClient.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	} */
 
     
     @Operation(description = "Busca clientes pelo CNPJ.")

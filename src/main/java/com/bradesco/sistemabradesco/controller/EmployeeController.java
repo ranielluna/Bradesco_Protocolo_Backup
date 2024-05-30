@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.bradesco.sistemabradesco.dto.EmployeeDTO;
+import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.models.Employee;
 import com.bradesco.sistemabradesco.repository.EmployeeRepository;
 import com.bradesco.sistemabradesco.services.EmployeeService;
@@ -112,6 +113,11 @@ public class EmployeeController {
 
     }
 
+    // list por dep
+    @PostMapping("/dep")
+    public List<Employee> listEmployeesByDepartment(@RequestBody Department department){
+        return employeeService.listEmployeeByDepartment(department);
+    }
 
 
 

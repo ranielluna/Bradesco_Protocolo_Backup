@@ -183,4 +183,22 @@ public Protocol save(Protocol protocol) {
     return protocolRepository.save(protocol);
 }
 
+// update final de status
+public Protocol finalUpdateStatusProtocol(Long number){
+    Protocol protocol = protocolRepository.findByProtocolNumber(number)
+    .orElseThrow(() -> new RuntimeException("Protocolo não encontrado para o valor: " + number));
+
+    protocol.setProtocolStatus("Respondido");
+
+    return protocolRepository.save(protocol);
+}
+
+public Protocol updateStatusProtocol(Long number,ProtocolDTO protocolDTO){
+    Protocol protocol = protocolRepository.findByProtocolNumber(number)
+    .orElseThrow(() -> new RuntimeException("Protocolo não encontrado para o valor: " + number));
+
+    protocol.setProtocolStatus(protocolDTO.getProtocolStatus());
+
+    return protocolRepository.save(protocol);
+}
 }//class

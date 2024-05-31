@@ -94,7 +94,7 @@ public class ProtocolController {
 
 	
 	
-	@Operation(description = "Encontra um protocolo pelo numero dele.")
+	/*@Operation(description = "Encontra um protocolo pelo numero dele.")
 	@ApiResponses({
 
         @ApiResponse(responseCode = "200", description = "Retorna apenas um protocolo com o número dele."),
@@ -105,8 +105,16 @@ public class ProtocolController {
 	public Protocol findByProtocolNumber(@PathVariable Long protocolNumber) {
 		Protocol result = protocolRepository.findByProtocolNumber(protocolNumber);
 		return result;
-	}
-	
+	}*/
+	@GetMapping(value = "/number/{protocolNumber}")
+public ResponseEntity<Protocol> findByProtocolNumber(@PathVariable Long protocolNumber) {
+    Optional<Protocol> result = protocolRepository.findByProtocolNumber(protocolNumber);
+    if (result.isPresent()) {
+        return ResponseEntity.ok(result.get());
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
 	
 	
 	@Operation(description = "Listar protocolos pelo status.")
@@ -158,7 +166,7 @@ public class ProtocolController {
 
 
 
-		@GetMapping("/responsavel/{number}")
+		/*@GetMapping("/responsavel/{number}")
     public ResponseEntity<String> getEmployee(@PathVariable Long number) {
         Protocol protocol = protocolRepository.findByProtocolNumber(number);
 
@@ -174,7 +182,25 @@ public class ProtocolController {
         } else {
             return ResponseEntity.status(404).body("Protocolo não encontrado");
         }
+    }*/
+
+		@GetMapping("/responsavel/{number}")
+public ResponseEntity<String> getEmployee(@PathVariable Long number) {
+    Optional<Protocol> protocolOpt = protocolRepository.findByProtocolNumber(number);
+    if (protocolOpt.isPresent()) {
+        Protocol protocol = protocolOpt.get();
+        SituationProtocol protocolSituation = situationProtocolRepository.findByProtocol(protocol);
+
+        if (protocolSituation!= null && protocolSituation.getEmployee()!= null) {
+            String nameEmployee = protocolSituation.getEmployee().getName();
+            return ResponseEntity.ok(nameEmployee);
+        } else {
+            return ResponseEntity.status(404).body("Funcionário não encontrado");
+        }
+    } else {
+        return ResponseEntity.status(404).body("Protocolo não encontrado");
     }
+}
 
 	
 		//Verifica os protocolos que nao estão em situação protocolo
@@ -191,10 +217,11 @@ public class ProtocolController {
 				@ApiResponse(responseCode = "200", description = "Retorna o protocolo atualizado com as suas informações."),
 				@ApiResponse(responseCode = "400", description = "Bad request.")
 		})
-		@PutMapping("/update/{code}")
-		public ResponseEntity<Protocol> updateProtocol(@PathVariable int code, @RequestBody ProtocolDTO protocolDTO) {
+		@PutMapping("/update/{number}")
+		public ResponseEntity<Protocol> updateProtocol(@PathVariable Long number, @RequestBody ProtocolDTO protocolDTO) {
 
-			Optional<Protocol> optionalProtocol = protocolService.findById(code);
+			//Optional<Protocol> optionalProtocol = protocolService.findById(code);
+			Optional<Protocol> optionalProtocol = protocolRepository.findByProtocolNumber(number);
 			if (optionalProtocol.isPresent()) {
 				Protocol protocol = optionalProtocol.get();
 	
@@ -245,6 +272,27 @@ public class ProtocolController {
 			}
 		}
 	
-	
+		@PutMapping("/final/{number}")
+		public ResponseEntity<Protocol> finalUpdateStatusProtocol(@PathVariable Long number){
+			try {
+				Protocol update = protocolService.finalUpdateStatusProtocol(number);
+				return ResponseEntity.ok(update);
+			}catch (RuntimeException e) {
+				return ResponseEntity.notFound().build();
+		}
+		}
 
-}
+		@PutMapping("/updateStatus/{number}")
+		public ResponseEntity<Protocol> updateStatusProtocol(@PathVariable Long number,@RequestBody ProtocolDTO protocolDTO){
+			try {
+				Protocol update = protocolService.updateStatusProtocol(number, protocolDTO);
+				return ResponseEntity.ok(update);
+			}catch (RuntimeException e) {
+				return ResponseEntity.notFound().build();
+		}
+		}
+
+
+
+
+}//class

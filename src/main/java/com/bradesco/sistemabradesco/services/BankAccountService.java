@@ -56,6 +56,22 @@ public class BankAccountService {
         return bankAccountRepository.findByAgency(agency);
                      
     }
-   
+
+    
+   // atualizar conta
+   @Transactional
+   public BankAccount updateAccount(int code, BankAccountDTO bankAccountDTO) {
+       // Encontrar a conta existente no banco de dados
+       BankAccount account = bankAccountRepository.findByCode(code)
+              .orElseThrow(() -> new RuntimeException("Conta não encontrada para o ID: " + code));
+
+       // Atualizar os campos da conta com os novos valores do DTO
+       account.setAccountStatus(bankAccountDTO.getAccountStatus());
+       account.setAccountNumber(bankAccountDTO.getAccountNumber());
+       account.setAgency(bankAccountDTO.getAgency());
+
+       // Salvando a conta atualizada no banco de dados
+       return bankAccountRepository.save(account);
+   }
    
 }

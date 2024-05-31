@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.bradesco.sistemabradesco.dto.SituationProtocolDTO;
 import com.bradesco.sistemabradesco.models.Protocol;
@@ -64,7 +67,7 @@ public class SituationProtocolController {
 
 
 
-    @GetMapping(value = "/number/{protocolNumber}/situation")
+ /*  @GetMapping(value = "/number/{protocolNumber}/situation")
 	public SituationProtocol findByProtocolNumberwithResponse(@PathVariable Long protocolNumber) {
 		Protocol result = protocolRepository.findByProtocolNumber(protocolNumber);
 		SituationProtocol situationProtocol = situationProtocolService.findByProtocol(result);
@@ -89,7 +92,37 @@ public class SituationProtocolController {
     responseList.add(result.getProtocolStatus());
 
     return responseList;
+}*/
+@GetMapping(value = "/number/{protocolNumber}/situation")
+public SituationProtocol findByProtocolNumberWithResponse(@PathVariable Long protocolNumber) {
+    Optional<Protocol> protocolOpt = protocolRepository.findByProtocolNumber(protocolNumber);
+    if (protocolOpt.isPresent()) {
+        Protocol protocol = protocolOpt.get();
+        SituationProtocol situationProtocol = situationProtocolService.findByProtocol(protocol);
+        return situationProtocol;
+    } else {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Protocolo não encontrado");
+    }
 }
+
+@GetMapping(value = "/{protocolNumber}/response")
+public List<Object> findByProtocolResponse(@PathVariable Long protocolNumber) {
+    Optional<Protocol> protocolOpt = protocolRepository.findByProtocolNumber(protocolNumber);
+    if (protocolOpt.isPresent()) {
+        Protocol protocol = protocolOpt.get();
+        SituationProtocol situationProtocol = situationProtocolService.findByProtocol(protocol);
+
+        List<Object> responseList = new ArrayList<>();
+        responseList.add(protocol.getProtocolNumber()); // Adicionando o número do protocolo
+        responseList.add(situationProtocol.getProtocolResponse()); // Adicionando a resposta do protocolo
+        responseList.add(protocol.getProtocolStatus()); // Adicionando o status do protocolo
+
+        return responseList;
+    } else {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Protocolo não encontrado");
+    }
+}
+
 
 
 @Operation(description = "Distribui protocolos automaticamento para um funcionário de acordo com o departamento.")

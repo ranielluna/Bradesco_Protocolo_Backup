@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -123,5 +124,17 @@ public class BankAccountController {
          return ResponseEntity.ok(bankAccounts);
     }
 
- 
+   // update da conta
+    @PutMapping("/{code}")
+    public ResponseEntity<BankAccount> updateAccount(
+            @PathVariable int code,
+            @RequestBody BankAccountDTO bankAccountDTO) {
+
+        try {
+            BankAccount updatedAccount = bankAccountService.updateAccount(code, bankAccountDTO);
+            return ResponseEntity.ok(updatedAccount);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

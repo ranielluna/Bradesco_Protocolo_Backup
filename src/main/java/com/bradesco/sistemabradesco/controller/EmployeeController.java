@@ -100,7 +100,7 @@ public class EmployeeController {
     }
 
 
-@Operation(description = "Lista todos os departamentos existentes na aplicação.")
+    @Operation(description = "Lista todos os departamentos existentes na aplicação.")
     @ApiResponses({
 
         @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os departamentos existentes."),

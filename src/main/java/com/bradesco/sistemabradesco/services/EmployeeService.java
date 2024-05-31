@@ -49,7 +49,7 @@ public class EmployeeService {
     }
 
 
-    
+    //Listagem funcionario por departamento
     public List<Employee> listEmployeeByDepartment(Department department){
       return employeeRepository.findByDepartment(department);
     }

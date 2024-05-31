@@ -12,8 +12,7 @@ import com.bradesco.sistemabradesco.models.Protocol;
 @Repository
 public interface ProtocolRepository extends JpaRepository<Protocol, Integer>{
   Protocol findByCode(int code);
-  Protocol findByProtocolNumber(Long protocolNumber);
+  Optional<Protocol> findByProtocolNumber(Long protocolNumber);
   List<Protocol> findByProtocolStatus(String status);
-  Optional<Protocol> findById(int code);
 
 }

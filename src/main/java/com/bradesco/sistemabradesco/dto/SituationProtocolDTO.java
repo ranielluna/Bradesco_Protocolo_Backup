@@ -4,19 +4,20 @@ import java.time.LocalDate;
 
 import org.springframework.beans.BeanUtils;
 
-import com.bradesco.sistemabradesco.models.Funcionario;
-import com.bradesco.sistemabradesco.models.Protocolo;
+import com.bradesco.sistemabradesco.models.Employee;
+import com.bradesco.sistemabradesco.models.Protocol;
 import com.bradesco.sistemabradesco.models.SituationProtocol;
 
 
 public class SituationProtocolDTO {
 
-  private int codigo;
-  private Funcionario funcionario;
-  private Protocolo protocolo;
-  private String respostaProtocolo;
-  private LocalDate dataRecebimento;
-  private LocalDate dataUltimaAcao;
+  private int code; // codigo
+  private Employee employee; // funcionario
+  private Protocol protocol; // protocolo
+  private String protocolResponse; // respostaProtocolo
+  private LocalDate receiptDate; // dataRecebimento
+  private LocalDate lastActionDate; // dataUltimaAcao
+  
 
   public SituationProtocolDTO(SituationProtocol situationProtocol){
     BeanUtils.copyProperties(situationProtocol, this);
@@ -24,54 +25,59 @@ public class SituationProtocolDTO {
 
   public SituationProtocolDTO(){
   }
-
-  public int getCodigo() {
-    return codigo;
+  public SituationProtocolDTO(int code, String protocolResponse){
+    this.code = code;
+    this.protocolResponse = protocolResponse;
   }
 
-  public void setCodigo(int codigo) {
-    this.codigo = codigo;
+  public int getCode() {
+    return code;
   }
 
-  public Funcionario getFuncionario() {
-    return funcionario;
+  public void setCode(int code) {
+    this.code = code;
   }
 
-  public void setFuncionario(Funcionario funcionario) {
-    this.funcionario = funcionario;
+  public Employee getEmployee() {
+    return employee;
   }
 
-  public Protocolo getProtocolo() {
-    return protocolo;
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
   }
 
-  public void setProtocolo(Protocolo protocolo) {
-    this.protocolo = protocolo;
+  public Protocol getProtocol() {
+    return protocol;
   }
 
-  public String getRespostaProtocolo() {
-    return respostaProtocolo;
+  public void setProtocol(Protocol protocol) {
+    this.protocol = protocol;
   }
 
-  public void setRespostaProtocolo(String respostaProtocolo) {
-    this.respostaProtocolo = respostaProtocolo;
+  public String getProtocolResponse() {
+    return protocolResponse;
   }
 
-  public LocalDate getDataRecebimento() {
-    return dataRecebimento;
+  public void setProtocolResponse(String protocolResponse) {
+    this.protocolResponse = protocolResponse;
   }
 
-  public void setDataRecebimento(LocalDate dataRecebimento) {
-    this.dataRecebimento = dataRecebimento;
+  public LocalDate getReceiptDate() {
+    return receiptDate;
   }
 
-  public LocalDate getDataUltimaAcao() {
-    return dataUltimaAcao;
+  public void setReceiptDate(LocalDate receiptDate) {
+    this.receiptDate = receiptDate;
   }
 
-  public void setDataUltimaAcao(LocalDate dataUltimaAcao) {
-    this.dataUltimaAcao = dataUltimaAcao;
+  public LocalDate getLastActionDate() {
+    return lastActionDate;
   }
+
+  public void setLastActionDate(LocalDate lastActionDate) {
+    this.lastActionDate = lastActionDate;
+  }
+
 
   
 }

@@ -21,26 +21,27 @@ import jakarta.persistence.Table;
 public class SituationProtocol implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento
-  private int codigo;
+  @Column(name = "codigo")
+  private int code;
 
   @ManyToOne
   @JoinColumn(name = "funcionario_codigo", referencedColumnName = "codigo")
-  private Funcionario funcionario;
+  private Employee employee;
 
   @ManyToOne
   @JoinColumn(name = "protocolo_codigo", referencedColumnName = "codigo")
-  private Protocolo protocolo;
+  private Protocol protocol;
 
   @Column(name = "resposta_protocolo", length = 2500)
-  private String respostaProtocolo;
+  private String protocolResponse;
 
   @Column(name = "data_recebimento", nullable = false)
-  private LocalDate dataRecebimento;
+  private LocalDate receiptDate;
 
   @Column(name = "data_ultima_acao", nullable = false)
-  private LocalDate dataUltimaAcao;
+  private LocalDate lastActionDate;
 
-  //status protocolo
+
   
   public SituationProtocol() {
   }
@@ -51,75 +52,63 @@ public class SituationProtocol implements Serializable {
 
   
   //GETTERS AND SETTERS
-  public int getCodigo() {
-    return codigo;
+  public int getCode() {
+    return code;
   }
 
-
-  public void setCodigo(int codigo) {
-    this.codigo = codigo;
+  public void setCode(int code) {
+    this.code = code;
   }
 
-
-  public Funcionario getFuncionario() {
-    return funcionario;
+  public Employee getEmployee() {
+    return employee;
   }
 
-
-  public void setFuncionario(Funcionario funcionario) {
-    this.funcionario = funcionario;
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
   }
 
-
-  public Protocolo getProtocolo() {
-    return protocolo;
+  public Protocol getProtocol() {
+    return protocol;
   }
 
-
-  public void setProtocolo(Protocolo protocolo) {
-    this.protocolo = protocolo;
+  public void setProtocol(Protocol protocol) {
+    this.protocol = protocol;
   }
 
-
-  public String getRespostaProtocolo() {
-    return respostaProtocolo;
+  public String getProtocolResponse() {
+    return protocolResponse;
   }
 
-
-  public void setRespostaProtocolo(String respostaProtocolo) {
-    this.respostaProtocolo = respostaProtocolo;
+  public void setProtocolResponse(String protocolResponse) {
+    this.protocolResponse = protocolResponse;
   }
 
-
-  public LocalDate getDataRecebimento() {
-    return dataRecebimento;
+  public LocalDate getReceiptDate() {
+    return receiptDate;
   }
 
-
-  public void setDataRecebimento(LocalDate dataRecebimento) {
-    this.dataRecebimento = dataRecebimento;
+  public void setReceiptDate(LocalDate receiptDate) {
+    this.receiptDate = receiptDate;
   }
 
-
-  public LocalDate getDataUltimaAcao() {
-    return dataUltimaAcao;
+  public LocalDate getLastActionDate() {
+    return lastActionDate;
   }
 
-
-  public void setDataUltimaAcao(LocalDate dataUltimaAcao) {
-    this.dataUltimaAcao = dataUltimaAcao;
+  public void setLastActionDate(LocalDate lastActionDate) {
+    this.lastActionDate = lastActionDate;
   }
-
+  
 
   //METODOS HASHCODE E EQUALS
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + codigo;
+    result = prime * result + code;
     return result;
   }
-
 
   @Override
   public boolean equals(Object obj) {
@@ -130,7 +119,7 @@ public class SituationProtocol implements Serializable {
     if (getClass() != obj.getClass())
       return false;
     SituationProtocol other = (SituationProtocol) obj;
-    if (codigo != other.codigo)
+    if (code != other.code)
       return false;
     return true;
   }

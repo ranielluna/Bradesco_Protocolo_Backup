@@ -135,6 +135,7 @@ public class EmployeeController {
     }
 
     // atualizar cargo do funcionário
+    // Exemplo para atualizar cargo:
     @PutMapping("/{managerCode}/position")
     public ResponseEntity<?> updateEmployeePosition(@PathVariable String managerCode,
             @RequestBody EmployeeDTO employeeDTO) {

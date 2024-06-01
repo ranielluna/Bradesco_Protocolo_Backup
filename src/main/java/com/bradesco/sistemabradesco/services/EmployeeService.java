@@ -116,7 +116,7 @@ public class EmployeeService {
   //Verificar Gerente
   public boolean isManager(Employee employee) {
     // Position position = new Position();
-    int positionCode = employee.getPosition().getCode(); // Assumindo que 'positionCode' é a propriedade que contém o código do cargo
+    int positionCode = employee.getPosition().getCode(); 
     String jobTitle = Position.getJobTitleByCode(positionCode);
     return "Gerente".equalsIgnoreCase(jobTitle);
 }

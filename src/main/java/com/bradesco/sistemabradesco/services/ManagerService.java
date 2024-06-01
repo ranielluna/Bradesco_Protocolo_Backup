@@ -21,27 +21,27 @@ public class ManagerService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-        // update status
-        @Transactional
-        public Employee updateEmployeeStatus(String code, EmployeeDTO employeeDTO) {
-            // verfificar se o funcionário existe 
-            Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
-            if (!optionalEmployee.isPresent()) {
-                throw new EmployeeNotFoundException("Gerente não encontrado.");
-            }
-    
-            // verificando se o funcionário é um gerente
-            Employee currentUser = optionalEmployee.get();
-            if (!employeeService.isManager(currentUser)) {
-                throw new NotAuthorizedException("Apenas gerentes podem mudar o status de um funcionário.");
-               
-            }
-    
-            // permitindo acesso a funcao alterar status
-            Employee employeeStatus = employeeRepository.findByCode(employeeDTO.getCode()).get();
-            employeeStatus.setEmployeeStatus(employeeDTO.getEmployeeStatus());
-            return employeeRepository.save(employeeStatus);
+    // update status
+    @Transactional
+    public Employee updateEmployeeStatus(String code, EmployeeDTO employeeDTO) {
+        // verfificar se o funcionário existe
+        Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
+        if (!optionalEmployee.isPresent()) {
+            throw new EmployeeNotFoundException("Gerente  não encontrado.");
         }
+
+        // verificando se o funcionário é um gerente
+        Employee currentUser = optionalEmployee.get();
+        if (!employeeService.isManager(currentUser)) {
+            throw new NotAuthorizedException("Apenas gerentes podem mudar o status de um funcionário.");
+
+        }
+
+        // permitindo acesso a funcao alterar status
+        Employee employeeStatus = employeeRepository.findByCode(employeeDTO.getCode()).get();
+        employeeStatus.setEmployeeStatus(employeeDTO.getEmployeeStatus());
+        return employeeRepository.save(employeeStatus);
+    }
 
     // update cargo
     @Transactional
@@ -50,14 +50,11 @@ public class ManagerService {
         if (!optionalEmployee.isPresent()) {
             throw new EmployeeNotFoundException("Funcionário não encontrado.");
         }
-
         Employee currentUser = optionalEmployee.get();
-
         if (!employeeService.isManager(currentUser)) {
             throw new NotAuthorizedException("Apenas gerentes podem mudar o cargo de um funcionário.");
         }
-
-        Employee employeePosition = employeeRepository.findByCode(code).get();
+        Employee employeePosition = employeeRepository.findByCode(employeeDTO.getCode()).get();
         employeePosition.setPosition(employeeDTO.getPosition());
         return employeeRepository.save(employeePosition);
     }
@@ -75,7 +72,7 @@ public class ManagerService {
             throw new NotAuthorizedException("Apenas gerentes podem mudar o departamento de um funcionário.");
         }
 
-        Employee employeeDepartment = employeeRepository.findByCode(code).get();
+        Employee employeeDepartment = employeeRepository.findByCode(employeeDTO.getCode()).get();
         employeeDepartment.setDepartment(employeeDTO.getDepartment());
         return employeeRepository.save(employeeDepartment);
     }
@@ -94,7 +91,7 @@ public class ManagerService {
             throw new NotAuthorizedException("Apenas gerentes podem mudar o email de um funcionário.");
         }
 
-        Employee employeeEmail = employeeRepository.findByCode(code).get();
+        Employee employeeEmail = employeeRepository.findByCode(employeeDTO.getCode()).get();
         employeeEmail.setEmail(employeeDTO.getEmail());
         return employeeRepository.save(employeeEmail);
     }
@@ -113,7 +110,7 @@ public class ManagerService {
             throw new NotAuthorizedException("Apenas gerentes podem mudar a senha de um funcionário.");
         }
 
-        Employee employeePassword = employeeRepository.findByCode(code).get();
+        Employee employeePassword = employeeRepository.findByCode(employeeDTO.getCode()).get();
         employeePassword.setPassword(employeeDTO.getPassword());
         return employeeRepository.save(employeePassword);
     }

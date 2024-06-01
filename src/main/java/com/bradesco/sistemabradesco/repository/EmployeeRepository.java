@@ -3,6 +3,7 @@ package com.bradesco.sistemabradesco.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 // import java.util.List;
 
@@ -18,7 +19,7 @@ import com.bradesco.sistemabradesco.models.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
-  Employee findByCode(String code);
+  Optional <Employee> findByCode(String code);
   List <Employee> findByDepartment(Department department);
 
 }

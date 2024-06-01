@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +50,7 @@ public class EmployeeController {
         String code = employee.getCode();
         String password = employee.getPassword();
 
-        employee = employeeRepository.findByCode(code);
+        employee = employeeRepository.findByCode(code).get();
         if (employee != null) {
             if (employee.getPassword().equals(password)) {
                 return new ResponseEntity<>("Acesso liberado", HttpStatus.OK);
@@ -64,7 +63,7 @@ public class EmployeeController {
 
     }
 
-    /* criando funcionario */
+    // Criando funcionario 
 
     @Operation(description = "Cria um funcionário na aplicação.")
     @ApiResponses({
@@ -105,51 +104,51 @@ public class EmployeeController {
 
     }
 
-    // list por departamento
+    // Listar por departamento
     @PostMapping("/dep")
     public List<Employee> listEmployeesByDepartment(@RequestBody Department department) {
         return employeeService.listEmployeeByDepartment(department);
     }
-
+    
     // UPDATES
     // Atualizar departamento do funcionário
-    @PutMapping("/{code}/department")
-    public ResponseEntity<Employee> updateEmployeeDepartment(@PathVariable String code,
-            @RequestBody EmployeeDTO employeeDTO) {
-        Employee updatedEmployee = employeeService.updateEmployeeDepartment(code, employeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
+    // @PutMapping("/{code}/department")
+    // public ResponseEntity<Employee> updateEmployeeDepartment(@PathVariable String code,
+    //         @RequestBody EmployeeDTO employeeDTO) {
+    //     Employee updatedEmployee = managerService.updateEmployeeDepartment(code, employeeDTO);
+    //     return ResponseEntity.ok(updatedEmployee);
+    // }
 
     // Atualizar cargo do funcionário
-    @PutMapping("/{code}/position")
-    public ResponseEntity<Employee> updateEmployeePosition(@PathVariable String code,
-            @RequestBody EmployeeDTO employeeDTO) {
-        Employee updatedEmployee = employeeService.updateEmployeePosition(code, employeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
+    // @PutMapping("/{code}/position")
+    // public ResponseEntity<Employee> updateEmployeePosition(@PathVariable String code,
+    //         @RequestBody EmployeeDTO employeeDTO) {
+    //     Employee updatedEmployee = managerService.updateEmployeePosition(code, employeeDTO);
+    //     return ResponseEntity.ok(updatedEmployee);
+    // }
 
     // Atualizar status do funcionário
-    @PutMapping("/{code}/status")
-    public ResponseEntity<Employee> updateEmployeeStatus(@PathVariable String code,
-            @RequestBody EmployeeDTO employeeDTO) {
-        Employee updatedEmployee = employeeService.updateEmployeeStatus(code, employeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
+    // @PutMapping("/{code}/status")
+    // public ResponseEntity<Employee> updateEmployeeStatus(@PathVariable String code,
+    //         @RequestBody EmployeeDTO employeeDTO) {
+    //     Employee updatedEmployee = managerService.updateEmployeeStatus(code, employeeDTO);
+    //     return ResponseEntity.ok(updatedEmployee);
+    // }
 
     // Atualizar email do funcionário
-    @PutMapping("/{code}/email")
-    public ResponseEntity<Employee> updateEmployeeEmail(@PathVariable String code,
-            @RequestBody EmployeeDTO employeeDTO) {
-        Employee updatedEmployee = employeeService.updateEmployeeEmail(code, employeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
+    // @PutMapping("/{code}/email")
+    // public ResponseEntity<Employee> updateEmployeeEmail(@PathVariable String code,
+    //         @RequestBody EmployeeDTO employeeDTO) {
+    //     Employee updatedEmployee = managerService.updateEmployeeEmail(code, employeeDTO);
+    //     return ResponseEntity.ok(updatedEmployee);
+    // }
 
     // Atualizar senha do funcionário
-    @PutMapping("/{code}/password")
-    public ResponseEntity<Employee> updateEmployeePassword(@PathVariable String code,
-            @RequestBody EmployeeDTO employeeDTO) {
-        Employee updatedEmployee = employeeService.updateEmployeePassaword(code, employeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
+    // @PutMapping("/{code}/password")
+    // public ResponseEntity<Employee> updateEmployeePassword(@PathVariable String code,
+    //         @RequestBody EmployeeDTO employeeDTO) {
+    //     Employee updatedEmployee = managerService.updateEmployeePassaword(code, employeeDTO);
+    //     return ResponseEntity.ok(updatedEmployee);
+    // }
 
 }// Class

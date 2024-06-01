@@ -78,7 +78,7 @@ public class PhoneTypeController {
     return ResponseEntity.ok(updatedPhoneType);
   }
 
-  // deletar
+  // Deletar
   @Operation(description = "Deleta um tipo de telefone da aplicação.")
   @ApiResponses({
 

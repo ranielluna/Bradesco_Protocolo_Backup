@@ -14,12 +14,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 
-
 @Entity
 @Table(name = "funcionario")
-public class Employee implements Serializable{
+public class Employee implements Serializable {
   @Id
-  @Column(name="codigo")
+  @Column(name = "codigo")
   private String code;
 
   @Column(name = "nome", length = 60, nullable = false)
@@ -49,8 +48,10 @@ public class Employee implements Serializable{
   public Employee(EmployeeDTO employeeDTO) {
     BeanUtils.copyProperties(employeeDTO, this);
   }
-  
-  //GETTERS AND SETTERS
+
+
+
+  // GETTERS AND SETTERS
   public String getCode() {
     return code;
   }
@@ -106,9 +107,8 @@ public class Employee implements Serializable{
   public void setPassword(String password) {
     this.password = password;
   }
-    
 
-  //METODOS HASHCODE E EQUALS
+  // METODOS HASHCODE E EQUALS
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -134,4 +134,4 @@ public class Employee implements Serializable{
     return true;
   }
 
-}//class
+}// class

@@ -30,6 +30,7 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
+    // Listar
     @Operation(description = "Lista os cargos presentes na aplicação.")
     @ApiResponses({
 
@@ -41,6 +42,8 @@ public class PositionController {
         return positionService.listPositions();
     }
 
+
+    // Criar
     @Operation(description = "Criar um novo cargo na aplicação.")
     @ApiResponses({
 
@@ -60,7 +63,7 @@ public class PositionController {
         return ResponseEntity.ok(updatedPosition);
     }
 
-    // delete
+    // Delete
     @Operation(description = "Deleta um cargo da aplicação por meio do codigo do cargo.")
     @ApiResponses({
 

@@ -14,25 +14,39 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="cargos")
-public class Position implements Serializable{
+@Table(name = "cargos")
+public class Position implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_incremento
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_incremento
   @Column(name = "codigo")
   private int code;
 
   @Column(name = "cargo", length = 20, nullable = false)
   private String position;
-  
+
   public Position() {
   }
 
-  public Position(PositionDTO positionDTO){
+  public Position(PositionDTO positionDTO) {
     BeanUtils.copyProperties(positionDTO, this);
   }
-  
-  //GETTERS AND SETTERS
+
+  // método estático para verificar o cargo fo funcionário
+  public static String getJobTitleByCode(int code) {
+    switch (code) {
+      case 1:
+        return "Operador";
+      case 2:
+        return "Analista";
+      case 3:
+        return "Gerente";
+      default:
+        return "Cargo desconhecido";
+    }
+  }
+
+  // GETTERS AND SETTERS
   public int getCode() {
     return code;
   }
@@ -48,8 +62,8 @@ public class Position implements Serializable{
   public void setPosition(String position) {
     this.position = position;
   }
-  
-  //METODOS HASHCODE E EQUALS
+
+  // METODOS HASHCODE E EQUALS
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -72,7 +86,4 @@ public class Position implements Serializable{
     return true;
   }// Este método verifica se dois objetos são iguais
 
-    
-  
-
-}//class
+}// class

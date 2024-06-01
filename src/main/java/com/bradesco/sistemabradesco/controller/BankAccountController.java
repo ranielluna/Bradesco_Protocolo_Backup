@@ -34,60 +34,6 @@ public class BankAccountController {
     @Autowired
     private BankAccountRepository bankAccountRepository;
 
-    // criando conta
-    @Operation(description = "Cria uma conta na aplicação.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Retorna a conta com suas informações."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @PostMapping("/addBankAccount")
-    public BankAccount addBankAccount(@RequestBody BankAccountDTO bankAccountDTO) {
-        return bankAccountService.addBankAccount(bankAccountDTO);
-    }
-
-    // update da conta
-
-    // atualizar status da conta
-    @PutMapping("/{code}/status")
-    public ResponseEntity<BankAccount> updateAccountStatus(@PathVariable int code,
-            @RequestBody BankAccountDTO bankAccountDTO) {
-        BankAccount updatedAccount = bankAccountService.updateAccount(code, bankAccountDTO);
-        return ResponseEntity.ok(updatedAccount);
-    }
-
-    // Método para atualizar o número da conta
-    @PutMapping("/{code}/number")
-    public ResponseEntity<BankAccount> updateAccountNumber(@PathVariable int code,
-            @RequestBody BankAccountDTO bankAccountDTO) {
-        BankAccount updatedAccount = bankAccountService.updateAccountNumber(code, bankAccountDTO);
-        return ResponseEntity.ok(updatedAccount);
-    }
-
-    // Método para atualizar a agência da conta
-    @PutMapping("/{code}/agency")
-    public ResponseEntity<BankAccount> updateAccountAgency(@PathVariable int code,
-            @RequestBody BankAccountDTO bankAccountDTO) {
-        BankAccount updatedAccount = bankAccountService.updateAccountAgency(code, bankAccountDTO);
-        return ResponseEntity.ok(updatedAccount);
-    }
-
-    // deletando conta
-    @Operation(description = "Deleta uma conta da aplicação.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Remove a conta e exite uma mensagem de sucesso."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @DeleteMapping("/delete/{codigo}")
-    public ResponseEntity<Object> deleteBankAccount(@PathVariable int code) {
-        bankAccountService.deleteBankAccount(code);
-        Map<String, String> message = new HashMap<>();
-        message.put("message", "Conta deletado com sucesso!");
-        return ResponseEntity.ok(message);
-
-    }
-
     // Listando contas
     @Operation(description = "Lista todas as contas da aplicação.")
     @ApiResponses({
@@ -134,6 +80,59 @@ public class BankAccountController {
             return ResponseEntity.status(404).body(bankAccounts);
         }
         return ResponseEntity.ok(bankAccounts);
+    }
+
+    // criando conta
+    @Operation(description = "Cria uma conta na aplicação.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna a conta com suas informações."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @PostMapping("/addBankAccount")
+    public BankAccount addBankAccount(@RequestBody BankAccountDTO bankAccountDTO) {
+        return bankAccountService.addBankAccount(bankAccountDTO);
+    }
+
+    // UPDATES
+    // atualizar status da conta
+    @PutMapping("/{code}/status")
+    public ResponseEntity<BankAccount> updateAccountStatus(@PathVariable int code,
+            @RequestBody BankAccountDTO bankAccountDTO) {
+        BankAccount updatedAccount = bankAccountService.updateAccount(code, bankAccountDTO);
+        return ResponseEntity.ok(updatedAccount);
+    }
+
+    // Método para atualizar o número da conta
+    @PutMapping("/{code}/number")
+    public ResponseEntity<BankAccount> updateAccountNumber(@PathVariable int code,
+            @RequestBody BankAccountDTO bankAccountDTO) {
+        BankAccount updatedAccount = bankAccountService.updateAccountNumber(code, bankAccountDTO);
+        return ResponseEntity.ok(updatedAccount);
+    }
+
+    // Método para atualizar a agência da conta
+    @PutMapping("/{code}/agency")
+    public ResponseEntity<BankAccount> updateAccountAgency(@PathVariable int code,
+            @RequestBody BankAccountDTO bankAccountDTO) {
+        BankAccount updatedAccount = bankAccountService.updateAccountAgency(code, bankAccountDTO);
+        return ResponseEntity.ok(updatedAccount);
+    }// UPDATES
+
+    // deletando conta
+    @Operation(description = "Deleta uma conta da aplicação.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Remove a conta e exite uma mensagem de sucesso."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @DeleteMapping("/delete/{codigo}")
+    public ResponseEntity<Object> deleteBankAccount(@PathVariable int code) {
+        bankAccountService.deleteBankAccount(code);
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "Conta deletado com sucesso!");
+        return ResponseEntity.ok(message);
+
     }
 
 }

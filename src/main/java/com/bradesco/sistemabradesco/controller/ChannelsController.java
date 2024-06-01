@@ -53,7 +53,7 @@ public class ChannelsController {
     }
 
 
-    // atualiza canal
+    // UPDATE
     @PutMapping("/{code}")
     public ResponseEntity<Channels> updateChannel(@PathVariable int code,
             @RequestBody ChannelsDTO channelsDTO) {

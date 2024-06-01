@@ -125,7 +125,7 @@ public class SituationProtocolController {
         SituationProtocol updatedSituation = situationProtocolService.updateProtocolReceiptDate(code,
                 situationProtocolDTO);
         return ResponseEntity.ok(updatedSituation);
-    }
+    }// UPDATES
 
     @Operation(description = "Deleta uma situação de protocolo na aplicação.")
     @ApiResponses({

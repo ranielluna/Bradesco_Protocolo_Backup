@@ -30,7 +30,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    /* criando cliente */
+    // Criando cliente 
     @Operation(description = "Cria um novo cliente na aplicação.")
     @ApiResponses({
 
@@ -40,6 +40,79 @@ public class ClientController {
     @PostMapping("/addClient")
     public Client addClient(@RequestBody ClientDTO clientDTO) {
         return clientService.addClient(clientDTO);
+    }
+
+    // Listando cliente 
+    @Operation(description = "Lista todos os clientes criados na aplicação.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Mostra todos os clientes em uma lista."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @GetMapping("/listClients")
+    public List<Client> listClients() {
+        return clientService.listClients();
+    }
+
+    // Buscando clientes por variaves 
+    @Operation(description = "Busca clientes pelo CPF.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com seu CPF."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<ClientDTO> findByCpf(@PathVariable String cpf) {
+        Client client = clientService.findByCpf(cpf);
+        if (client == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ClientDTO(client));
+    }
+
+    @Operation(description = "Busca clientes pelo CNPJ.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com seu CNPJ."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @GetMapping("/cnpj/{cnpj}")
+    public ResponseEntity<ClientDTO> findByCnpj(@PathVariable String cnpj) {
+        Client client = clientService.findByCnpj(cnpj);
+        if (client == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ClientDTO(client));
+    }
+
+    @Operation(description = "Busca cliente pelo Nome.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com seu Nome."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ClientDTO> findByName(@PathVariable String name) {
+        Client client = clientService.findByName(name);
+        if (client == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ClientDTO(client));
+    }
+
+    @Operation(description = "Busca clientes pela Razão Social.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com sua Razão Social."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @GetMapping("/companyName/{companyName}")
+    public ResponseEntity<ClientDTO> findByCompanyName(@PathVariable String companyName) {
+        Client client = clientService.findByCompanyName(companyName);
+        if (client == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ClientDTO(client));
     }
 
     // UPDATES PESSOA FISICA
@@ -100,7 +173,7 @@ public class ClientController {
         return ResponseEntity.ok(updatedCompany);
     }
 
-    /* deletando cliente */
+    // Deletando cliente 
     @Operation(description = "Deleta um cliente por meio do ID.")
     @ApiResponses({
 
@@ -115,76 +188,7 @@ public class ClientController {
         return ResponseEntity.ok(message);
     }
 
-    /* listando cliente */
-    @Operation(description = "Lista todos os clientes criados na aplicação.")
-    @ApiResponses({
+    
 
-            @ApiResponse(responseCode = "200", description = "Mostra todos os clientes em uma lista."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @GetMapping("/listClients")
-    public List<Client> listClients() {
-        return clientService.listClients();
-    }
-
-    /* buscando clientes por variaves */
-    @Operation(description = "Busca clientes pelo CPF.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com seu CPF."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<ClientDTO> findByCpf(@PathVariable String cpf) {
-        Client client = clientService.findByCpf(cpf);
-        if (client == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new ClientDTO(client));
-    }
-
-    @Operation(description = "Busca clientes pelo CNPJ.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com seu CNPJ."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @GetMapping("/cnpj/{cnpj}")
-    public ResponseEntity<ClientDTO> findByCnpj(@PathVariable String cnpj) {
-        Client client = clientService.findByCnpj(cnpj);
-        if (client == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new ClientDTO(client));
-    }
-
-    @Operation(description = "Busca cliente pelo Nome.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com seu Nome."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @GetMapping("/name/{name}")
-    public ResponseEntity<ClientDTO> findByName(@PathVariable String name) {
-        Client client = clientService.findByName(name);
-        if (client == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new ClientDTO(client));
-    }
-
-    @Operation(description = "Busca clientes pela Razão Social.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Retorna apenas um cliente com sua Razão Social."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @GetMapping("/companyName/{companyName}")
-    public ResponseEntity<ClientDTO> findByCompanyName(@PathVariable String companyName) {
-        Client client = clientService.findByCompanyName(companyName);
-        if (client == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(new ClientDTO(client));
-    }
+    
 }

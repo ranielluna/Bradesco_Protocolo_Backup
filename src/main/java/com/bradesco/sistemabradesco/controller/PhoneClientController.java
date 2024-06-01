@@ -48,7 +48,7 @@ public class PhoneClientController {
   }
   // filtrar por cliente??
 
-  // criar
+  // Criar
   @Operation(description = "Cria um telefone para um cliente na aplicação.")
   @ApiResponses({
 
@@ -83,7 +83,7 @@ public class PhoneClientController {
     return ResponseEntity.ok(updatedPhone);
   }
 
-  // deletar
+  // Deletar
   @Operation(description = "Deleta um telefone de um cliente na aplicação.")
   @ApiResponses({
 

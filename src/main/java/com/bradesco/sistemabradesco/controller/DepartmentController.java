@@ -30,7 +30,21 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    /* criando Departamento */
+    // Listar Departamentos
+
+    @Operation(description = "Lista todos os departamentos existentes na aplicação.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os departamentos existentes."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @GetMapping("/listDepartment")
+    public List<Department> listDepartments() {
+        return departmentService.listDepartments();
+
+    }
+
+    // criando Departamento
     @Operation(description = "Cria um departamento na aplicação.")
     @ApiResponses({
 
@@ -50,7 +64,7 @@ public class DepartmentController {
         return ResponseEntity.ok(updatedDepartment);
     }
 
-    /* deletando departamento */
+    // deletando departamento
     @Operation(description = "Deleta um departamento da aplicação.")
     @ApiResponses({
 
@@ -63,20 +77,6 @@ public class DepartmentController {
         Map<String, String> message = new HashMap<>();
         message.put("message", "Departamento deletado com sucesso");
         return ResponseEntity.ok(message);
-    }
-
-    /* Listar Departamentos */
-
-    @Operation(description = "Lista todos os departamentos existentes na aplicação.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os departamentos existentes."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @GetMapping("/listDepartment")
-    public List<Department> listDepartments() {
-        return departmentService.listDepartments();
-
     }
 
 }

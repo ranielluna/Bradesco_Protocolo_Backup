@@ -24,16 +24,19 @@ public class ManagerService {
     // update status
     @Transactional
     public Employee updateEmployeeStatus(String code, EmployeeDTO employeeDTO) {
+        // verfificar se o funcionário existe 
         Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
         if (!optionalEmployee.isPresent()) {
             throw new EmployeeNotFoundException("Funcionário não encontrado.");
         }
 
+        // verificando se o funcionário é um gerente
         Employee currentUser = optionalEmployee.get();
         if (!employeeService.isManager(currentUser)) {
-            throw new NotAuthorizedException("Apenas gerentes podem mudar o atatus de um funcionário.");
+            throw new NotAuthorizedException("Apenas gerentes podem mudar o status de um funcionário.");
         }
 
+        // permitindo acesso a funcao alterar status
         Employee employeeStatus = employeeRepository.findByCode(code).get();
         employeeStatus.setEmployeeStatus(employeeDTO.getEmployeeStatus());
         return employeeRepository.save(employeeStatus);

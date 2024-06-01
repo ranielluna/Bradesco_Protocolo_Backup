@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bradesco.sistemabradesco.dto.EmployeeDTO;
+import com.bradesco.sistemabradesco.exception.EmployeeNotFoundException;
+import com.bradesco.sistemabradesco.exception.NotAuthorizedException;
 import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.models.Employee;
 import com.bradesco.sistemabradesco.repository.EmployeeRepository;
 import com.bradesco.sistemabradesco.services.EmployeeService;
+import com.bradesco.sistemabradesco.services.ManagerService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,6 +38,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private ManagerService managerService;
 
     // login codigos = i025368 - i054867 - i147857
     // senha = 010203
@@ -150,5 +157,85 @@ public class EmployeeController {
     //     Employee updatedEmployee = managerService.updateEmployeePassaword(code, employeeDTO);
     //     return ResponseEntity.ok(updatedEmployee);
     // }
+
+    // updates chamando a classe ManagerService
+     // Endpoint para atualizar o status de um funcionário
+    @PutMapping("/{managerCode}/status")
+    public ResponseEntity<?> updateEmployeeStatus(@PathVariable String managerCode,
+                                                   @RequestBody EmployeeDTO employeeDTO) {
+        try {
+            Employee updatedEmployee = managerService.updateEmployeeStatus(managerCode, employeeDTO);
+            return ResponseEntity.ok(updatedEmployee);
+        } catch (EmployeeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (NotAuthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+   
+     // Exemplo para atualizar cargo:
+    @PutMapping("/{managerCode}/position")
+    public ResponseEntity<?> updateEmployeePosition(@PathVariable String managerCode,
+                                                    @RequestBody EmployeeDTO employeeDTO) {
+        try {
+            Employee updatedEmployee = managerService.updateEmployeePosition(managerCode, employeeDTO);
+            return ResponseEntity.ok(updatedEmployee);
+        } catch (EmployeeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (NotAuthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{managerCode}/departmen")
+    public ResponseEntity<?> updateEmployeeDepartment(@PathVariable String managerCode,
+                                                    @RequestBody EmployeeDTO employeeDTO) {
+        try {
+            Employee updatedEmployee = managerService.updateEmployeeDepartment(managerCode, employeeDTO);
+            return ResponseEntity.ok(updatedEmployee);
+        } catch (EmployeeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (NotAuthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{managerCode}/email")
+    public ResponseEntity<?> updateEmployeeEmail(@PathVariable String managerCode,
+                                                    @RequestBody EmployeeDTO employeeDTO) {
+        try {
+            Employee updatedEmployee = managerService.updateEmployeeEmail(managerCode, employeeDTO);
+            return ResponseEntity.ok(updatedEmployee);
+        } catch (EmployeeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (NotAuthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{managerCode}/password")
+    public ResponseEntity<?> updateEmployeePassword(@PathVariable String managerCode,
+                                                    @RequestBody EmployeeDTO employeeDTO) {
+        try {
+            Employee updatedEmployee = managerService.updateEmployeePassaword(managerCode, employeeDTO);
+            return ResponseEntity.ok(updatedEmployee);
+        } catch (EmployeeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (NotAuthorizedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 
 }// Class

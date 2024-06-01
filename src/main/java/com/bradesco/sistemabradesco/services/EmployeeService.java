@@ -115,19 +115,22 @@ public class EmployeeService {
   // verificação de cargos para separar funções dos colaboradores
   //Verificar Gerente
   public boolean isManager(Employee employee) {
-    String jobTitle = Position.getJobTitleByCode(0);
+    // Position position = new Position();
+    int positionCode = employee.getPosition().getCode(); // Assumindo que 'positionCode' é a propriedade que contém o código do cargo
+    String jobTitle = Position.getJobTitleByCode(positionCode);
     return "Gerente".equalsIgnoreCase(jobTitle);
-  }
+}
+
 
   // Verificar Analista
   public boolean isAnalyst(Employee employee) {
-    String jobTitle = Position.getJobTitleByCode(0);
+    String jobTitle = Position.getJobTitleByCode(2);
     return "Analista".equalsIgnoreCase(jobTitle);
   }
 
   // Verificar Operador
   public boolean isOperator(Employee employee) {
-    String jobTitle = Position.getJobTitleByCode(0);
+    String jobTitle = Position.getJobTitleByCode(1);
     return "Operator".equalsIgnoreCase(jobTitle);
   }
 

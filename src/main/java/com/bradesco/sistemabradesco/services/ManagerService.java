@@ -21,26 +21,27 @@ public class ManagerService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // update status
-    @Transactional
-    public Employee updateEmployeeStatus(String code, EmployeeDTO employeeDTO) {
-        // verfificar se o funcionário existe 
-        Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
-        if (!optionalEmployee.isPresent()) {
-            throw new EmployeeNotFoundException("Funcionário não encontrado.");
+        // update status
+        @Transactional
+        public Employee updateEmployeeStatus(String code, EmployeeDTO employeeDTO) {
+            // verfificar se o funcionário existe 
+            Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
+            if (!optionalEmployee.isPresent()) {
+                throw new EmployeeNotFoundException("Gerente não encontrado.");
+            }
+    
+            // verificando se o funcionário é um gerente
+            Employee currentUser = optionalEmployee.get();
+            if (!employeeService.isManager(currentUser)) {
+                throw new NotAuthorizedException("Apenas gerentes podem mudar o status de um funcionário.");
+               
+            }
+    
+            // permitindo acesso a funcao alterar status
+            Employee employeeStatus = employeeRepository.findByCode(employeeDTO.getCode()).get();
+            employeeStatus.setEmployeeStatus(employeeDTO.getEmployeeStatus());
+            return employeeRepository.save(employeeStatus);
         }
-
-        // verificando se o funcionário é um gerente
-        Employee currentUser = optionalEmployee.get();
-        if (!employeeService.isManager(currentUser)) {
-            throw new NotAuthorizedException("Apenas gerentes podem mudar o status de um funcionário.");
-        }
-
-        // permitindo acesso a funcao alterar status
-        Employee employeeStatus = employeeRepository.findByCode(code).get();
-        employeeStatus.setEmployeeStatus(employeeDTO.getEmployeeStatus());
-        return employeeRepository.save(employeeStatus);
-    }
 
     // update cargo
     @Transactional

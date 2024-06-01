@@ -19,6 +19,7 @@ import com.bradesco.sistemabradesco.models.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
+  // Optional <Employee> findByCode(managerCode);
   Optional <Employee> findByCode(String code);
   List <Employee> findByDepartment(Department department);
 

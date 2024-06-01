@@ -70,7 +70,7 @@ public class EmployeeController {
 
     }
 
-    // Criando funcionario 
+    // Criando funcionario
 
     @Operation(description = "Cria um funcionário na aplicação.")
     @ApiResponses({
@@ -116,53 +116,12 @@ public class EmployeeController {
     public List<Employee> listEmployeesByDepartment(@RequestBody Department department) {
         return employeeService.listEmployeeByDepartment(department);
     }
-    
-    // UPDATES
-    // Atualizar departamento do funcionário
-    // @PutMapping("/{code}/department")
-    // public ResponseEntity<Employee> updateEmployeeDepartment(@PathVariable String code,
-    //         @RequestBody EmployeeDTO employeeDTO) {
-    //     Employee updatedEmployee = managerService.updateEmployeeDepartment(code, employeeDTO);
-    //     return ResponseEntity.ok(updatedEmployee);
-    // }
 
-    // Atualizar cargo do funcionário
-    // @PutMapping("/{code}/position")
-    // public ResponseEntity<Employee> updateEmployeePosition(@PathVariable String code,
-    //         @RequestBody EmployeeDTO employeeDTO) {
-    //     Employee updatedEmployee = managerService.updateEmployeePosition(code, employeeDTO);
-    //     return ResponseEntity.ok(updatedEmployee);
-    // }
-
-    // Atualizar status do funcionário
-    // @PutMapping("/{code}/status")
-    // public ResponseEntity<Employee> updateEmployeeStatus(@PathVariable String code,
-    //         @RequestBody EmployeeDTO employeeDTO) {
-    //     Employee updatedEmployee = managerService.updateEmployeeStatus(code, employeeDTO);
-    //     return ResponseEntity.ok(updatedEmployee);
-    // }
-
-    // Atualizar email do funcionário
-    // @PutMapping("/{code}/email")
-    // public ResponseEntity<Employee> updateEmployeeEmail(@PathVariable String code,
-    //         @RequestBody EmployeeDTO employeeDTO) {
-    //     Employee updatedEmployee = managerService.updateEmployeeEmail(code, employeeDTO);
-    //     return ResponseEntity.ok(updatedEmployee);
-    // }
-
-    // Atualizar senha do funcionário
-    // @PutMapping("/{code}/password")
-    // public ResponseEntity<Employee> updateEmployeePassword(@PathVariable String code,
-    //         @RequestBody EmployeeDTO employeeDTO) {
-    //     Employee updatedEmployee = managerService.updateEmployeePassaword(code, employeeDTO);
-    //     return ResponseEntity.ok(updatedEmployee);
-    // }
-
-    // updates chamando a classe ManagerService
-     // Endpoint para atualizar o status de um funcionário
+    // UPDATES restritos ao gerente
+    // atualizar o status de um funcionário
     @PutMapping("/{managerCode}/status")
     public ResponseEntity<?> updateEmployeeStatus(@PathVariable String managerCode,
-                                                   @RequestBody EmployeeDTO employeeDTO) {
+            @RequestBody EmployeeDTO employeeDTO) {
         try {
             Employee updatedEmployee = managerService.updateEmployeeStatus(managerCode, employeeDTO);
             return ResponseEntity.ok(updatedEmployee);
@@ -175,11 +134,10 @@ public class EmployeeController {
         }
     }
 
-   
-     // Exemplo para atualizar cargo:
+    // atualizar cargo do funcionário
     @PutMapping("/{managerCode}/position")
     public ResponseEntity<?> updateEmployeePosition(@PathVariable String managerCode,
-                                                    @RequestBody EmployeeDTO employeeDTO) {
+            @RequestBody EmployeeDTO employeeDTO) {
         try {
             Employee updatedEmployee = managerService.updateEmployeePosition(managerCode, employeeDTO);
             return ResponseEntity.ok(updatedEmployee);
@@ -192,9 +150,10 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/{managerCode}/departmen")
+    // atualizar departamento do funcionário
+    @PutMapping("/{managerCode}/department")
     public ResponseEntity<?> updateEmployeeDepartment(@PathVariable String managerCode,
-                                                    @RequestBody EmployeeDTO employeeDTO) {
+            @RequestBody EmployeeDTO employeeDTO) {
         try {
             Employee updatedEmployee = managerService.updateEmployeeDepartment(managerCode, employeeDTO);
             return ResponseEntity.ok(updatedEmployee);
@@ -207,9 +166,10 @@ public class EmployeeController {
         }
     }
 
+    // atualizar email do funcionário
     @PutMapping("/{managerCode}/email")
     public ResponseEntity<?> updateEmployeeEmail(@PathVariable String managerCode,
-                                                    @RequestBody EmployeeDTO employeeDTO) {
+            @RequestBody EmployeeDTO employeeDTO) {
         try {
             Employee updatedEmployee = managerService.updateEmployeeEmail(managerCode, employeeDTO);
             return ResponseEntity.ok(updatedEmployee);
@@ -222,9 +182,10 @@ public class EmployeeController {
         }
     }
 
+    // atualizar senha do funcionário
     @PutMapping("/{managerCode}/password")
     public ResponseEntity<?> updateEmployeePassword(@PathVariable String managerCode,
-                                                    @RequestBody EmployeeDTO employeeDTO) {
+            @RequestBody EmployeeDTO employeeDTO) {
         try {
             Employee updatedEmployee = managerService.updateEmployeePassaword(managerCode, employeeDTO);
             return ResponseEntity.ok(updatedEmployee);
@@ -235,7 +196,6 @@ public class EmployeeController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-    }
-
+    }// UPDATES restritos ao gerente
 
 }// Class

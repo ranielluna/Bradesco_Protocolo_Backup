@@ -58,8 +58,16 @@ public class ProtocolController {
 	private ClientRepository clientRepository;
 
 	@GetMapping
-	public String home() {
-		return "Bem-vindo à API de protocolos!";
+	public ResponseEntity<String> home() {
+		try {
+			Resource resource = new ClassPathResource("templates/protocol.html");
+			InputStream inputStream = resource.getInputStream();
+			String htmlContent = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+			return ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(htmlContent);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving HTML file");
+		}
 	}
 
 	@Operation(description = "Lista todos protocolos da aplicação.")

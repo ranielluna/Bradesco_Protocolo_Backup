@@ -69,7 +69,7 @@ public class ProtocolTypeService {
   }// updates
 
 
-  // deletar conta 
+  // deletar tipo de protocolo
   @Transactional
   public void deleteProtocolType(int code) {
     protocolTypeRepository.deleteById(code);

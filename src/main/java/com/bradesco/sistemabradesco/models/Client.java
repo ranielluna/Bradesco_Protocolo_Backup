@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 @Table(name = "cliente")
 public class Client implements Serializable {
   @Id
-  @Column(name = "cpf")
+  // @Column(name = "cpf")
   private String cpf;
 
   @Column(name = "nome", length = 60, nullable = false)

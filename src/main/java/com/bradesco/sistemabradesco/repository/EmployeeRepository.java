@@ -8,12 +8,11 @@ import java.util.Optional;
 // import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-// import org.springframework.data.jpa.repository.Query;
-// import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.models.Employee;
+import com.bradesco.sistemabradesco.models.Position;
 
 
 
@@ -22,5 +21,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
   // Optional <Employee> findByCode(managerCode);
   Optional <Employee> findByCode(String code);
   List <Employee> findByDepartment(Department department);
-
+  List<Employee> findByPosition(Position position);
 }

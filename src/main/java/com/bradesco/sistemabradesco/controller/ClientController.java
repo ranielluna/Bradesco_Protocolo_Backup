@@ -30,7 +30,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    // Criando cliente 
+    /* criando cliente */
     @Operation(description = "Cria um novo cliente na aplicação.")
     @ApiResponses({
 
@@ -38,9 +38,10 @@ public class ClientController {
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PostMapping("/addClient")
-    public Client addClient(@RequestBody ClientDTO clientDTO) {
-        return clientService.addClient(clientDTO);
+    public Client addClient(@RequestBody Client client) {
+        return clientService.addClient(client);
     }
+
 
     // Listando cliente 
     @Operation(description = "Lista todos os clientes criados na aplicação.")

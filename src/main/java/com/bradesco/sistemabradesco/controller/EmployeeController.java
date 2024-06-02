@@ -21,6 +21,7 @@ import com.bradesco.sistemabradesco.exception.EmployeeNotFoundException;
 import com.bradesco.sistemabradesco.exception.NotAuthorizedException;
 import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.models.Employee;
+import com.bradesco.sistemabradesco.repository.DepartmentRepository;
 import com.bradesco.sistemabradesco.repository.EmployeeRepository;
 import com.bradesco.sistemabradesco.services.EmployeeService;
 import com.bradesco.sistemabradesco.services.ManagerService;
@@ -41,6 +42,10 @@ public class EmployeeController {
 
     @Autowired
     private ManagerService managerService;
+
+    
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     // login codigos = i025368 - i054867 - i147857
     // senha = 010203
@@ -116,6 +121,14 @@ public class EmployeeController {
     public List<Employee> listEmployeesByDepartment(@RequestBody Department department) {
         return employeeService.listEmployeeByDepartment(department);
     }
+
+      //TESTE lista de apenas analistas
+      @PostMapping("/test/{code}")
+      public List<Employee> listEmployee(@PathVariable int code) {
+          Department department = departmentRepository.findByCode(code);
+          List<Employee> employee = employeeRepository.findByDepartment(department);
+          return employeeService.listAnalystEmployess(employee);
+      }
 
     // UPDATES restritos ao gerente
     // atualizar o status de um funcionário

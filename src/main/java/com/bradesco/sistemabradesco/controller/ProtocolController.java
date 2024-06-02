@@ -29,6 +29,7 @@ import com.bradesco.sistemabradesco.repository.DepartmentRepository;
 import com.bradesco.sistemabradesco.repository.ProtocolRepository;
 import com.bradesco.sistemabradesco.repository.SituationProtocolRepository;
 import com.bradesco.sistemabradesco.services.ProtocolService;
+import com.bradesco.sistemabradesco.services.SituationProtocolService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -46,6 +47,9 @@ public class ProtocolController {
 
 	@Autowired
 	private SituationProtocolRepository situationProtocolRepository;
+
+	@Autowired
+	private SituationProtocolService situationProtocolService;
 
 	@Autowired
 	private DepartmentRepository departmentRepository;
@@ -82,24 +86,7 @@ public class ProtocolController {
 		return result;
 	}
 
-	/*
-	 * @Operation(description = "Encontra um protocolo pelo numero dele.")
-	 * 
-	 * @ApiResponses({
-	 * 
-	 * @ApiResponse(responseCode = "200", description =
-	 * "Retorna apenas um protocolo com o número dele."),
-	 * 
-	 * @ApiResponse(responseCode = "400", description = "Bad request.")
-	 * }
-	 * )
-	 * 
-	 * @GetMapping(value = "/number/{protocolNumber}")
-	 * public Protocol findByProtocolNumber(@PathVariable Long protocolNumber) {
-	 * Protocol result = protocolRepository.findByProtocolNumber(protocolNumber);
-	 * return result;
-	 * }
-	 */
+	// encontra o protocolo pelo número dele
 	@GetMapping(value = "/number/{protocolNumber}")
 	public ResponseEntity<Protocol> findByProtocolNumber(@PathVariable Long protocolNumber) {
 		Optional<Protocol> result = protocolRepository.findByProtocolNumber(protocolNumber);
@@ -150,28 +137,8 @@ public class ProtocolController {
 
 	}
 
-	/*
-	 * @GetMapping("/responsavel/{number}")
-	 * public ResponseEntity<String> getEmployee(@PathVariable Long number) {
-	 * Protocol protocol = protocolRepository.findByProtocolNumber(number);
-	 * 
-	 * if (protocol != null) {
-	 * SituationProtocol protocolSituation =
-	 * situationProtocolRepository.findByProtocol(protocol);
-	 * 
-	 * if (protocolSituation != null && protocolSituation.getEmployee() != null) {
-	 * String nameEmployee = protocolSituation.getEmployee().getName();
-	 * return ResponseEntity.ok(nameEmployee);
-	 * } else {
-	 * return ResponseEntity.status(404).body("Funcionário não encontrado");
-	 * }
-	 * } else {
-	 * return ResponseEntity.status(404).body("Protocolo não encontrado");
-	 * }
-	 * }
-	 */
-
-	@GetMapping("/responsavel/{number}")
+	// pega o funcionario responsavel pelo protooclo
+	@GetMapping("/employee/{number}")
 	public ResponseEntity<String> getEmployee(@PathVariable Long number) {
 		Optional<Protocol> protocolOpt = protocolRepository.findByProtocolNumber(number);
 		if (protocolOpt.isPresent()) {
@@ -196,6 +163,7 @@ public class ProtocolController {
 		return Protocols;
 	}
 
+	// atualiza protocolo e encaminha já para o funcionario
 	@Operation(description = "Atualiza um protocolo na aplicação.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "Retorna o protocolo atualizado com as suas informações."),
@@ -246,10 +214,26 @@ public class ProtocolController {
 
 			protocol.setPropensaoBacen(protocolDTO.isPropensaoBacen());
 			protocol.setExpedite(protocolDTO.isExpedite());
-			protocol.setDue(protocolDTO.isDue());
-			protocol.setJustified(protocolDTO.isJustified());
+			if (protocolDTO.isDue() != true || protocol.getPropensaoBacen() != false) {
+				protocol.setDue(protocolDTO.isDue());
+				// propensaoBacen false = não indica chance de gerar um apontamento BACEN
+				// se for um motivo não devido -> encaminha para um metodo protocolDueFalse,
+				// onde
+				// ja tem campos certos, como a resposta ou coisa do tipo
+				situationProtocolService.ProtocolDueFalse(protocol);// metodo de resposta pronta -> motivos nn suficiene
+																	// para
+																	// abertura
 
+			}
+			protocol.setJustified(protocolDTO.isJustified());
 			protocolService.save(protocol);
+			// metodo de distribuir protocolo automaticamento
+
+			if (protocolDTO.getDepartment() != null) {
+				situationProtocolService.findUnregisteredProtocols();
+			}
+
+			// chamar o metodo de distribuição
 			return ResponseEntity.ok(protocol);
 		} else {
 			return ResponseEntity.notFound().build();

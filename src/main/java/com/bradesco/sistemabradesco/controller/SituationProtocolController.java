@@ -50,6 +50,59 @@ public class SituationProtocolController {
         return situationProtocolService.addSituationProtocol(situationProtocolDTO);
     }
 
+    // UPDATES
+    // Atualizar situação do protocolo do funcionário
+    @PutMapping("/{code}/employee")
+    public ResponseEntity<SituationProtocol> updateSituationProtocolEmployee(@PathVariable int code,
+            @RequestBody SituationProtocolDTO situationProtocolDTO) {
+        SituationProtocol updatedSituation = situationProtocolService.updateSituationProtocolEmployee(code,
+                situationProtocolDTO);
+        return ResponseEntity.ok(updatedSituation);
+    }
+
+    // Atualizar última data de ação
+    @PutMapping("/{code}/last-action-date")
+    public ResponseEntity<SituationProtocol> updateLastActionDate(@PathVariable int code,
+            @RequestBody SituationProtocolDTO situationProtocolDTO) {
+        SituationProtocol updatedSituation = situationProtocolService.updateLastActionDate(code, situationProtocolDTO);
+        return ResponseEntity.ok(updatedSituation);
+    }
+
+    // Atualizar resposta do protocolo
+    // @PutMapping("/{code}/protocol-response")
+    // public ResponseEntity<SituationProtocol> updateProtocolResponse(@PathVariable
+    // int code,
+    // @RequestBody SituationProtocolDTO situationProtocolDTO) {
+    // SituationProtocol updatedSituation =
+    // situationProtocolService.updateProtocolResponse(code,situationProtocolDTO);
+
+    // return ResponseEntity.ok(updatedSituation);
+    // }
+
+    // Atualizar data de recebimento
+    @PutMapping("/{code}/receipt-date")
+    public ResponseEntity<SituationProtocol> updateProtocolReceiptDate(@PathVariable int code,
+            @RequestBody SituationProtocolDTO situationProtocolDTO) {
+        SituationProtocol updatedSituation = situationProtocolService.updateProtocolReceiptDate(code,
+                situationProtocolDTO);
+        return ResponseEntity.ok(updatedSituation);
+    }
+
+    @Operation(description = "Deleta uma situação de protocolo na aplicação.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Deleta uma situação de protocolo e exibe uma mensagem de sucesso."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
+    @DeleteMapping("/delete/{code}")
+    public ResponseEntity<Object> deleteSituationProtocol(@PathVariable int code) {
+        situationProtocolService.deleteSituationProtocol(code);
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "Funcionário deletado com sucesso!");
+        return ResponseEntity.ok(message);
+
+    }
+
     @GetMapping(value = "/number/{protocolNumber}/situation")
     public SituationProtocol findByProtocolNumberWithResponse(@PathVariable Long protocolNumber) {
         Optional<Protocol> protocolOpt = protocolRepository.findByProtocolNumber(protocolNumber);
@@ -59,6 +112,24 @@ public class SituationProtocolController {
             return situationProtocol;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Protocolo não encontrado");
+        }
+    }
+
+    @PutMapping("/{protocolNumber}/protocolResponse")
+    public ResponseEntity<SituationProtocol> updateResponse(
+            @PathVariable(required = false) Long protocolNumber,
+            @RequestBody SituationProtocolDTO situationProtocolDTO) {
+
+        if (protocolNumber == null) {
+            return ResponseEntity.badRequest().body(null); // Ou lance uma exceção
+        }
+
+        try {
+            SituationProtocol updatedProtocol = situationProtocolService
+                    .updateProtocolResponse(Optional.ofNullable(protocolNumber), situationProtocolDTO);
+            return ResponseEntity.ok(updatedProtocol);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -91,54 +162,4 @@ public class SituationProtocolController {
         return situationProtocolService.findUnregisteredProtocols();
     }
 
-    // UPDATES
-    // Atualizar situação do protocolo do funcionário
-    @PutMapping("/{code}/employee")
-    public ResponseEntity<SituationProtocol> updateSituationProtocolEmployee(@PathVariable int code,
-            @RequestBody SituationProtocolDTO situationProtocolDTO) {
-        SituationProtocol updatedSituation = situationProtocolService.updateSituationProtocolEmployee(code,
-                situationProtocolDTO);
-        return ResponseEntity.ok(updatedSituation);
-    }
-
-    // Atualizar última data de ação
-    @PutMapping("/{code}/last-action-date")
-    public ResponseEntity<SituationProtocol> updateLastActionDate(@PathVariable int code,
-            @RequestBody SituationProtocolDTO situationProtocolDTO) {
-        SituationProtocol updatedSituation = situationProtocolService.updateLastActionDate(code, situationProtocolDTO);
-        return ResponseEntity.ok(updatedSituation);
-    }
-
-    // Atualizar resposta do protocolo
-    @PutMapping("/{code}/protocol-response")
-    public ResponseEntity<SituationProtocol> updateProtocolResponse(@PathVariable int code,
-            @RequestBody SituationProtocolDTO situationProtocolDTO) {
-        SituationProtocol updatedSituation = situationProtocolService.updateProtocolResponse(code,
-                situationProtocolDTO);
-        return ResponseEntity.ok(updatedSituation);
-    }
-
-    // Atualizar data de recebimento
-    @PutMapping("/{code}/receipt-date")
-    public ResponseEntity<SituationProtocol> updateProtocolReceiptDate(@PathVariable int code,
-            @RequestBody SituationProtocolDTO situationProtocolDTO) {
-        SituationProtocol updatedSituation = situationProtocolService.updateProtocolReceiptDate(code,
-                situationProtocolDTO);
-        return ResponseEntity.ok(updatedSituation);
-    }// UPDATES
-
-    @Operation(description = "Deleta uma situação de protocolo na aplicação.")
-    @ApiResponses({
-
-            @ApiResponse(responseCode = "200", description = "Deleta uma situação de protocolo e exibe uma mensagem de sucesso."),
-            @ApiResponse(responseCode = "400", description = "Bad request.")
-    })
-    @DeleteMapping("/delete/{code}")
-    public ResponseEntity<Object> deleteSituationProtocol(@PathVariable int code) {
-        situationProtocolService.deleteSituationProtocol(code);
-        Map<String, String> message = new HashMap<>();
-        message.put("message", "Funcionário deletado com sucesso!");
-        return ResponseEntity.ok(message);
-
-    }
 }

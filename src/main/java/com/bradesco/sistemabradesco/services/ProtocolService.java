@@ -32,8 +32,10 @@ public class ProtocolService {
     private ProtocolRepository protocolRepository;
 
     @Autowired
-   private SituationProtocolRepository situationProtocolRepository;
+    private SituationProtocolRepository situationProtocolRepository;
 
+    @Autowired
+    private ClientService clientService;
 
     public Protocol openProtocol(ProtocolDTO protocolDTO) {
 
@@ -43,12 +45,12 @@ public class ProtocolService {
 
         Protocol protocol = new Protocol();
         ProtocolType protocolType = protocolDTO.getProtocolType();
-        Client client = protocolDTO.getClient();
+        Client client = clientService.addClient(protocolDTO.getClient());
         Channels channels = protocolDTO.getChannel();
 
         protocol.setCode(protocolDTO.getCode());
         protocol.setOpeningDate(LocalDate.now());
-        LocalDate deadline = protocol.getOpeningDate().plusDays(protocolType.getTreatmentDeadline()); 
+        LocalDate deadline = protocol.getOpeningDate().plusDays(protocolType.getTreatmentDeadline());
         protocol.setDeadline(deadline);
         protocol.setDescription(protocolDTO.getDescription());
         protocol.setClient(client);
@@ -56,7 +58,7 @@ public class ProtocolService {
         protocol.setProtocolType(protocolType);
         protocol.setProtocolNumber(protocolDTO.getProtocolNumber());
         protocol.setProtocolStatus("Novo");
-        
+
         try {
             return protocolRepository.save(protocol);
         } catch (Exception e) {
@@ -65,9 +67,8 @@ public class ProtocolService {
         }
     }
 
-    
-       @Transactional
-    public void deleteProtocol(int code){
+    @Transactional
+    public void deleteProtocol(int code) {
         protocolRepository.deleteById(code);
     }
 
@@ -75,25 +76,22 @@ public class ProtocolService {
         return protocolRepository.findByProtocolStatus(status);
     }
 
-
-
-   // registro de protocolos q ainda nn foram registrado em situação protocolo
+    // registro de protocolos q ainda nn foram registrado em situação protocolo
     public List<Protocol> findUnregistered() {
         // Obtém todos os códigos de protocolos registrados na SituaçãoProtocolo
         Set<Integer> registeredCodes = situationProtocolRepository.findAll().stream()
-               .map(situationProtocol -> situationProtocol.getProtocol().getCode())
-               .collect(Collectors.toSet());
+                .map(situationProtocol -> situationProtocol.getProtocol().getCode())
+                .collect(Collectors.toSet());
 
         // Filtra os protocolos que não estão na lista de códigos registrados
         List<Protocol> unregisteredProtocols = protocolRepository.findAll().stream()
-        .filter(protocol ->!registeredCodes.contains(protocol.getCode())&& protocol.getDepartment()!= null) 
-        .collect(Collectors.toList());
+                .filter(protocol -> !registeredCodes.contains(protocol.getCode()) && protocol.getDepartment() != null)
+                .collect(Collectors.toList());
 
         return unregisteredProtocols;
     }
 
-
-    //update
+    // update
     public Protocol updateProtocol(int code, ProtocolDTO protocolDTO) {
         Protocol existingProtocol = protocolRepository.findById(code)
                 .orElseThrow(() -> new RuntimeException("Protocol not found"));
@@ -146,59 +144,37 @@ public class ProtocolService {
 
         return protocolRepository.save(existingProtocol);
     }
- // Métodos para converter DTOs em entidades
-//  private Client toClientEntity(ClientDTO clientDTO) {
-//     if (clientDTO == null) return null;
-//     Client client = new Client();
-//     BeanUtils.copyProperties(clientDTO, client);
-//     return client;
-// }
 
-// private Channels toChannelsEntity(ChannelsDTO channelsDTO) {
-//     if (channelsDTO == null) return null;
-//     Channels channels = new Channels();
-//     BeanUtils.copyProperties(channelsDTO, channels);
-//     return channels;
-// }
+    public Optional<Protocol> findById(int code) {
+        return protocolRepository.findById(code);
+    }
 
-// private ProtocolType toProtocolTypeEntity(ProtocolTypeDTO protocolTypeDTO) {
-//     if (protocolTypeDTO == null) return null;
-//     ProtocolType protocolType = new ProtocolType();
-//     BeanUtils.copyProperties(protocolTypeDTO, protocolType);
-//     return protocolType;
-// }
+    public Protocol save(Protocol protocol) {
+        return protocolRepository.save(protocol);
+    }
 
-// private Department toDepartmentEntity(DepartmentDTO departmentDTO) {
-//     if (departmentDTO == null) return null;
-//     Department department = new Department();
-//     BeanUtils.copyProperties(departmentDTO, department);
-//     return department;
-// }
+    // update final de status
+    public Protocol finalUpdateStatusProtocol(Long number) {
+        Protocol protocol = protocolRepository.findByProtocolNumber(number)
+                .orElseThrow(() -> new RuntimeException("Protocolo não encontrado para o valor: " + number));
 
-public Optional<Protocol> findById(int code) {
-    return protocolRepository.findById(code);
-}
+        protocol.setProtocolStatus("Respondido");
 
-public Protocol save(Protocol protocol) {
-    return protocolRepository.save(protocol);
-}
+        return protocolRepository.save(protocol);
+    }
 
-// update final de status
-public Protocol finalUpdateStatusProtocol(Long number){
-    Protocol protocol = protocolRepository.findByProtocolNumber(number)
-    .orElseThrow(() -> new RuntimeException("Protocolo não encontrado para o valor: " + number));
+    public Protocol updateStatusProtocol(Long number, ProtocolDTO protocolDTO) {
+        Protocol protocol = protocolRepository.findByProtocolNumber(number)
+                .orElseThrow(() -> new RuntimeException("Protocolo não encontrado para o valor: " + number));
 
-    protocol.setProtocolStatus("Respondido");
+        // Verifica se o status do protocolo é nulo e lança uma exceção se for
+        String protocolStatus = protocolDTO.getProtocolStatus();
+        if (protocolStatus == null || protocolStatus.trim().isEmpty()) {
+            throw new IllegalArgumentException("O status do protocolo não pode ser nulo.");
+        }
 
-    return protocolRepository.save(protocol);
-}
+        protocol.setProtocolStatus(protocolStatus);
 
-public Protocol updateStatusProtocol(Long number,ProtocolDTO protocolDTO){
-    Protocol protocol = protocolRepository.findByProtocolNumber(number)
-    .orElseThrow(() -> new RuntimeException("Protocolo não encontrado para o valor: " + number));
-
-    protocol.setProtocolStatus(protocolDTO.getProtocolStatus());
-
-    return protocolRepository.save(protocol);
-}
-}//class
+        return protocolRepository.save(protocol);
+    }
+}// class

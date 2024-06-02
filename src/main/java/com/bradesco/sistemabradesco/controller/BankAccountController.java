@@ -73,6 +73,12 @@ public class BankAccountController {
     }
 
     // encontrando conta por agencia
+    @Operation(description = "Encontra uma conta  o status de uma conta.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna a conta com seus campos atualizados."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @GetMapping("/{agency}")
     public ResponseEntity<List<BankAccount>> findByAgency(@PathVariable Integer agency) {
         List<BankAccount> bankAccounts = bankAccountRepository.findByAgency(agency);
@@ -96,6 +102,12 @@ public class BankAccountController {
 
     // UPDATES
     // atualizar status da conta
+    @Operation(description = "Atualiza o status de uma conta.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna a conta com seus campos atualizados."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @PutMapping("/{code}/status")
     public ResponseEntity<BankAccount> updateAccountStatus(@PathVariable int code,
             @RequestBody BankAccountDTO bankAccountDTO) {
@@ -104,6 +116,12 @@ public class BankAccountController {
     }
 
     // Método para atualizar o número da conta
+    @Operation(description = "Atualiza o status de uma conta.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna a conta com seus status atualizado."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @PutMapping("/{code}/number")
     public ResponseEntity<BankAccount> updateAccountNumber(@PathVariable int code,
             @RequestBody BankAccountDTO bankAccountDTO) {
@@ -112,6 +130,12 @@ public class BankAccountController {
     }
 
     // Método para atualizar a agência da conta
+    @Operation(description = "Atualiza a agência de uma conta.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna a conta com sua agência atualizada."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @PutMapping("/{code}/agency")
     public ResponseEntity<BankAccount> updateAccountAgency(@PathVariable int code,
             @RequestBody BankAccountDTO bankAccountDTO) {

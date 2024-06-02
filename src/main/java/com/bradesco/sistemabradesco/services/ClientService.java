@@ -1,6 +1,5 @@
 package com.bradesco.sistemabradesco.services;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,20 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     // metodo criar um novo cliente
-    public Client addClient(ClientDTO clientDTO) {
+    public Client addClient(Client client) {
         Client newCliente = new Client();
-        BeanUtils.copyProperties(clientDTO, newCliente);
+        newCliente.setCpf(client.getCpf());
+        newCliente.setName(client.getName());
+        newCliente.setEmail(client.getEmail());
+        newCliente.setClientType(client.getClientType());
+        if (client.getProfession() != null) {
+            newCliente.setProfession(client.getProfession());
+        }
+        if (client.getCnpj() != null) {
+            newCliente.setCnpj(client.getCnpj());
+            newCliente.setCompanyName(client.getCompanyName());
+        }
+
         return clientRepository.save(newCliente);
     }
 

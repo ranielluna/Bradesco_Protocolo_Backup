@@ -1,5 +1,6 @@
 package com.bradesco.sistemabradesco.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,50 +42,31 @@ public class EmployeeService {
 
   }
 
-  // updates
-  // Atualizar departamento
-  // @Transactional
-  // public Employee updateEmployeeDepartment(String code, EmployeeDTO employeeDTO) {
-  //   Employee employeeDepartment = employeeRepository.findByCode(code);
-  //   employeeDepartment.setDepartment(employeeDTO.getDepartment());
-  //   return employeeRepository.save(employeeDepartment);
-  // }
-
-  // // update cargo
-  // @Transactional
-  // public Employee updateEmployeePosition(String code, EmployeeDTO employeeDTO) {
-  //   Employee employeePosition = employeeRepository.findByCode(code);
-  //   employeePosition.setPosition(employeeDTO.getPosition());
-  //   return employeeRepository.save(employeePosition);
-  // }
-
-  // // update status
-  // @Transactional
-  // public Employee updateEmployeeStatus(String code, EmployeeDTO employeeDTO) {
-  //   Employee employeeStatus = employeeRepository.findByCode(code);
-  //   employeeStatus.setEmployeeStatus(employeeDTO.getEmployeeStatus());
-  //   return employeeRepository.save(employeeStatus);
-  // }
-
-  // update email
-  // @Transactional
-  // public Employee updateEmployeeEmail(String code, EmployeeDTO employeeDTO) {
-  //   Employee employeeEmail = employeeRepository.findByCode(code);
-  //   employeeEmail.setEmail(employeeDTO.getEmail());
-  //   return employeeRepository.save(employeeEmail);
-  // }
-
-  // // update password
-  // @Transactional
-  // public Employee updateEmployeePassaword(String code, EmployeeDTO employeeDTO) {
-  //   Employee employeePassword = employeeRepository.findByCode(code);
-  //   employeePassword.setPassword(employeeDTO.getPassword());
-  //   return employeeRepository.save(employeePassword);
-  // }
-
   // Listagem funcionario por departamento
   public List<Employee> listEmployeeByDepartment(Department department) {
-    return employeeRepository.findByDepartment(department);
+    List<Employee> employees = employeeRepository.findByDepartment(department);
+    return employees;
+  }
+
+  // filtra apenas os funcionários que não são gerentes
+  public List<Employee> listAnalystEmployess(List<Employee> employees) {
+    List<Employee> employeeOffGerente = new ArrayList<>();
+    // Employee employee = new Employee();
+    // Itera sobre a lista em ordem reversa para evitar problemas ao remover
+    // elementos
+    for (Employee employee : employees) {
+      // Verifica se o cargo do funcionário é "analista"
+      if (!"Gerente".equals(employee.getPosition().getPosition())) {
+        // Remove o funcionário da lista
+        employeeOffGerente.add(employee);
+      }
+    }
+    return employeeOffGerente;
+  }
+
+  // listagem funcionario por cargo
+  public List<Employee> listEmployeeByPosition(Position position) {
+    return employeeRepository.findByPosition(position);
   }
 
   // retorna o funcionario com menor demanda da tabela situação protocolo
@@ -113,14 +95,13 @@ public class EmployeeService {
   }
 
   // verificação de cargos para separar funções dos colaboradores
-  //Verificar Gerente
+  // Verificar Gerente
   public boolean isManager(Employee employee) {
     // Position position = new Position();
-    int positionCode = employee.getPosition().getCode(); 
+    int positionCode = employee.getPosition().getCode();
     String jobTitle = Position.getJobTitleByCode(positionCode);
     return "Gerente".equalsIgnoreCase(jobTitle);
-}
-
+  }
 
   // Verificar Analista
   public boolean isAnalyst(Employee employee) {

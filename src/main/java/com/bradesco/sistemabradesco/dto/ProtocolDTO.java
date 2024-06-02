@@ -9,23 +9,50 @@ import com.bradesco.sistemabradesco.models.Client;
 import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.models.Protocol;
 import com.bradesco.sistemabradesco.models.ProtocolType;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+
+@Schema(description = "Dados para criar um protocolo.")
 public class ProtocolDTO {
 
   private int code; // codigo
   private LocalDate openingDate; // dataAbertura
   private LocalDate deadline; // dataPrazo
+
+  @Schema(description = "Descrição do protocolo", example = "Não estou conseguindo acessar meu saldo.")
   private String description; // descricao
+
+  @Schema(description = "Cliente", example = "{objeto Cliente}")
   private Client client; // cliente
+
+  @Schema(description = "Canal", example = "{objeto Canais}")
   private Channels channel; // canal
+
+  @Schema(description = "Tipo de protocolo", example = "{objeto tipoProtocolo}")
   private ProtocolType protocolType; // tipoProtocolo
+
+  @Schema(description = "Data de recebimento", example = "2024/06/01")
   private LocalDate initialReceiptDate; // dataRecebimentoInicial
+
+  @Schema(description = "Departamento", example = "{objeto departamento}")
   private Department department; // departamento
+
+  @Schema(description = "Propensão bacen", example = "true/false")
   private boolean propensaoBacen; // (Se é uma reclamação que há possibilidades de gerar um apontamento BACEN)
+
+  @Schema(description = "Agilizar", example = "true/false")
   private boolean expedite; // (Se por prioridade, é necessário agilizar o protocolo)
+
+  @Schema(description = "Devido:", example = "true/false")
   private boolean due; // (Se a abertura do protocolo tem um motivo plausível)
+
+  @Schema(description = "Justificada", example = "true/false")
   private boolean justified; // (Se a questão que o requerente trouxe é procedente, ou se o Banco possui alguma justificativa)
+
+  @Schema(description = "Número do protocolo", example = "20240010123")
   private Long protocolNumber; // numeroProtocolo
+
+
   private String protocolStatus; //status
 
   //CONSTRUTUOR DE IMPORTAÇÃO DA ENTIDADE PROTOCOLO

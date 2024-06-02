@@ -26,7 +26,7 @@ import com.bradesco.sistemabradesco.models.BankAccount;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-@RequestMapping("/api/backAccount")
+@RequestMapping("/api/bankAccount")
 public class BankAccountController {
     @Autowired
     private BankAccountService bankAccountService;
@@ -50,7 +50,7 @@ public class BankAccountController {
     @Operation(description = "Encontra uma conta por meio do código dela.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna apenas uma conta com seu código."),
+            @ApiResponse(responseCode = "200", description = "Retorna apenas um objeto conta com seu código."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @GetMapping("/{code}")
@@ -63,6 +63,12 @@ public class BankAccountController {
     }
 
     // encontrando conta por numero
+    @Operation(description = "Encontra uma conta por meio do número dela.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna apenas um objeto conta com seu número."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @GetMapping("/{accontNumber}")
     public ResponseEntity<BankAccountDTO> findByAccountNumber(@PathVariable int accountNumber) {
         BankAccount bankAccount = bankAccountService.findByAccountNumber(accountNumber);
@@ -73,10 +79,10 @@ public class BankAccountController {
     }
 
     // encontrando conta por agencia
-    @Operation(description = "Encontra uma conta  o status de uma conta.")
+    @Operation(description = "Encontra uma conta por meio da agência.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna a conta com seus campos atualizados."),
+            @ApiResponse(responseCode = "200", description = "Retorna um objeto conta com sua agência."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @GetMapping("/{agency}")
@@ -92,7 +98,7 @@ public class BankAccountController {
     @Operation(description = "Cria uma conta na aplicação.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna a conta com suas informações."),
+            @ApiResponse(responseCode = "200", description = "Retorna um novo objeto conta com suas informações."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PostMapping("/addBankAccount")
@@ -105,7 +111,7 @@ public class BankAccountController {
     @Operation(description = "Atualiza o status de uma conta.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna a conta com seus campos atualizados."),
+            @ApiResponse(responseCode = "200", description = "Retorna o objeto conta com seus campos atualizados."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PutMapping("/{code}/status")
@@ -116,10 +122,10 @@ public class BankAccountController {
     }
 
     // Método para atualizar o número da conta
-    @Operation(description = "Atualiza o status de uma conta.")
+    @Operation(description = "Atualiza o número de uma conta.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna a conta com seus status atualizado."),
+            @ApiResponse(responseCode = "200", description = "Retorna o objeto conta com seu número atualizado."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PutMapping("/{code}/number")
@@ -133,7 +139,7 @@ public class BankAccountController {
     @Operation(description = "Atualiza a agência de uma conta.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna a conta com sua agência atualizada."),
+            @ApiResponse(responseCode = "200", description = "Retorna um objeto conta com sua agência atualizada."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PutMapping("/{code}/agency")

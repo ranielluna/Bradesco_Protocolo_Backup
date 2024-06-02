@@ -74,6 +74,12 @@ public class ProtocolTypeController {
 
   // UPDATE
   // Atualizar tipo de protocolo
+  @Operation(description = "Atualiza o tipo de um protocolo.")
+  @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Retorna o objeto 'tipo protocolo' atualizado."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+  })
   @PutMapping("/{code}/type")
   public ResponseEntity<ProtocolType> updateProtocolType(@PathVariable int code,
       @RequestBody ProtocolTypeDTO protocolTypeDTO) {
@@ -82,6 +88,12 @@ public class ProtocolTypeController {
   }
 
   // Atualizar dias úteis
+  @Operation(description = "Atualiza os dias úteis de um tipo de protocolo.")
+  @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Retorna o objeto 'tipo protocolo' com seus dias úteis atualizado."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+  })
   @PutMapping("/{code}/business-days")
   public ResponseEntity<ProtocolType> updateBusinessDays(@PathVariable int code,
       @RequestBody ProtocolTypeDTO protocolTypeDTO) {
@@ -90,6 +102,12 @@ public class ProtocolTypeController {
   }
 
   // Atualizar prazo de tratativa
+  @Operation(description = "Atualiza o prazo de tratativa de um tipo de protocolo.")
+  @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Retorna o objeto 'tipo protocolo' com seu prazo de tratativa atualizado."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+  })
   @PutMapping("/{code}/treatment-deadline")
   public ResponseEntity<ProtocolType> updateTreatmentDeadline(@PathVariable int code,
       @RequestBody ProtocolTypeDTO protocolTypeDTO) {

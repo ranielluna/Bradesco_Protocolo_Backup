@@ -46,7 +46,6 @@ public class PhoneClientController {
     List<PhoneClient> phoneClients = phoneClientRepository.findAll();
     return phoneClients;
   }
-  // filtrar por cliente??
 
   // Criar
   @Operation(description = "Cria um telefone para um cliente na aplicação.")
@@ -62,6 +61,12 @@ public class PhoneClientController {
 
   // UPDATES
   // Atualizar DDD
+  @Operation(description = "Atualiza o DDD de um telefone.")
+  @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Retorna o objeto telefone com seu DDD atualizado."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+  })
   @PutMapping("/{code}/ddd")
   public ResponseEntity<PhoneClient> updateDdd(@PathVariable int code, @RequestBody PhoneClientDTO phoneClientDTO) {
     PhoneClient updatedPhone = phoneClientService.updateDdd(code, phoneClientDTO);
@@ -69,6 +74,12 @@ public class PhoneClientController {
   }
 
   // Atualizar tipo de telefone
+  @Operation(description = "Atualiza o tipo de um telefone.")
+  @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Retorna o objeto telefone com seu tipo atualizado."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+  })
   @PutMapping("/{code}/type")
   public ResponseEntity<PhoneClient> updatePhoneType(@PathVariable int code,
       @RequestBody PhoneClientDTO phoneClientDTO) {
@@ -77,6 +88,12 @@ public class PhoneClientController {
   }
 
   // Atualizar número de telefone
+  @Operation(description = "Atualiza o número de um telefone.")
+  @ApiResponses({
+
+      @ApiResponse(responseCode = "200", description = "Retorna o objeto telefone com seu número atualizado."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+  })
   @PutMapping("/{code}/number")
   public ResponseEntity<PhoneClient> updateNumber(@PathVariable int code, @RequestBody PhoneClientDTO phoneClientDTO) {
     PhoneClient updatedPhone = phoneClientService.updateNumber(code, phoneClientDTO);

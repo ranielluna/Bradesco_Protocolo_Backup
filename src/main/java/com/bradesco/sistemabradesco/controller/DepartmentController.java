@@ -31,11 +31,10 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     // Listar Departamentos
-
     @Operation(description = "Lista todos os departamentos existentes na aplicação.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os departamentos existentes."),
+            @ApiResponse(responseCode = "200", description = "Retorna um arrayList com todos os departamentos existentes."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @GetMapping("/listDepartment")
@@ -44,11 +43,11 @@ public class DepartmentController {
 
     }
 
-    // criando Departamento
+    // criar Departamento
     @Operation(description = "Cria um departamento na aplicação.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna o departamento com suas informações."),
+            @ApiResponse(responseCode = "200", description = "Retorna o objeto departamento com suas informações."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PostMapping("/addDepartment")
@@ -57,6 +56,12 @@ public class DepartmentController {
     }
 
     // Atualizar departamento
+    @Operation(description = "Atualiza um Departamento.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna o obeto departamento atualizado."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @PutMapping("/{code}")
     public ResponseEntity<Department> updateDepartment(@PathVariable int code,
             @RequestBody DepartmentDTO departmentDTO) {

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,19 +60,25 @@ public class PhoneTypeController {
     return result;
   }
 
-  // criar
+  // Criar um novo tipo de telefone
   @Operation(description = "Cria um novo tipo de telefone na aplicação.")
   @ApiResponses({
-
       @ApiResponse(responseCode = "200", description = "Retorna apenas um objeto tipo de telefone com as suas informações."),
       @ApiResponse(responseCode = "400", description = "Bad request.")
   })
-  public PhoneType addPhoneType(@RequestBody PhoneTypeDTO phoneTypeDTO) {
-    return phoneTypeService.addPhoneType(phoneTypeDTO);
+  @PostMapping("/addPhoneType")
+  public ResponseEntity<PhoneType> addPhoneType(@RequestBody PhoneTypeDTO phoneTypeDTO) {
+    PhoneType phoneType = phoneTypeService.addPhoneType(phoneTypeDTO);
+    return ResponseEntity.ok(phoneType);
   }
 
   // UPDATE
   // Atualizar tipo de telefone
+  @Operation(description = "Atualiza o tipo de um telefone.")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Tetorna um objeto tipo de telefone atualizado."),
+      @ApiResponse(responseCode = "400", description = "Bad request.")
+  })
   @PutMapping("/{code}")
   public ResponseEntity<PhoneType> updatePhoneType(@PathVariable int code, @RequestBody PhoneTypeDTO phoneTypeDTO) {
     PhoneType updatedPhoneType = phoneTypeService.updatePhoneType(code, phoneTypeDTO);

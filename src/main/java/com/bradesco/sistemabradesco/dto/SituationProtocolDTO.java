@@ -7,15 +7,25 @@ import org.springframework.beans.BeanUtils;
 import com.bradesco.sistemabradesco.models.Employee;
 import com.bradesco.sistemabradesco.models.Protocol;
 import com.bradesco.sistemabradesco.models.SituationProtocol;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-
+@Schema(description = "Dados para criar uma situação de protocolo.")
 public class SituationProtocolDTO {
 
   private int code; // codigo
+
+  @Schema(description = "Funcionário", example = "{objeto funcionario}")
   private Employee employee; // funcionario
+
+  @Schema(description = "Protocolo", example = "{objeto protocolo}")
   private Protocol protocol; // protocolo
+
+  @Schema(description = "Resposta do protocolo", example = "Sua demanda esta sendo tratada")
   private String protocolResponse; // respostaProtocolo
+
+
   private LocalDate receiptDate; // dataRecebimento
+  
   private LocalDate lastActionDate; // dataUltimaAcao
   
 

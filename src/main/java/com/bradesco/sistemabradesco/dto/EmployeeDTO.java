@@ -1,18 +1,32 @@
 package com.bradesco.sistemabradesco.dto;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.BeanUtils;
 
 import com.bradesco.sistemabradesco.models.Position;
 import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.models.Employee;
 
+@Schema(description = "Dados para criar um funcionário")
 public class EmployeeDTO {
+
+  @Schema(description = "Código do funcionário", example = "i123456")
   private String code;
+
+  @Schema(description = "Nome do funcionário", example = "Amaro Lima")
   private String name;
+
+  @Schema(description = "Email do funcionário", example = "amara.lima@bradesco.com")
   private String email;
+
+  @Schema(description = "Status do funcionário", example = "Ativo")
   private String employeeStatus;
+
+  @Schema(description = "Cargo do funcionário", example = "{objeto Cargo}")
   private Position position;
+
+  @Schema(description = "Departamento do funcionário", example = "{objeto Departamento}")
   private Department department;
+
   private String password;
   
   public EmployeeDTO(Employee employee) {

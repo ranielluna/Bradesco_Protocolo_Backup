@@ -1,9 +1,13 @@
 package com.bradesco.sistemabradesco.dto;
 
 import com.bradesco.sistemabradesco.models.Position;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Dados para criar um cargo")
 public class PositionDTO {
     private int code;
+
+    @Schema(description = "Nome do cargo", example = "Operador")
     private String position;
 
     public PositionDTO() {

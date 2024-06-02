@@ -1,11 +1,15 @@
 package com.bradesco.sistemabradesco.dto;
 
 import org.springframework.beans.BeanUtils;
-
 import com.bradesco.sistemabradesco.models.PhoneType;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Dados para criar um tipo de telefone")
 public class PhoneTypeDTO {
   private int code;
+
+  
+  @Schema(description = "Tipo do telefone", example = "residencial")
   private String type;
   
   public PhoneTypeDTO(PhoneType tipoTelefone) {

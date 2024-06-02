@@ -1,15 +1,23 @@
 package com.bradesco.sistemabradesco.dto;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.BeanUtils;
 import com.bradesco.sistemabradesco.models.Client;
 import com.bradesco.sistemabradesco.models.BankAccount;
 
-
+@Schema(description = "Dados para criar uma conta")
 public class BankAccountDTO{
     private int code;
+    
+    @Schema(description = "Agência", example = "1245")
     private int agency;
+
+    @Schema(description = "Número da conta", example = "7896542")
     private int accountNumber;
+
+    @Schema(description = "Status da conta", example = "Ativa")
     private String accountStatus;
+
+    @Schema(description = "Cliente", example = "{objeto Cliente}")
     private Client client;
     
     public BankAccountDTO() {

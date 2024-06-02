@@ -33,7 +33,7 @@ public class ChannelsController {
     // Metodo para listar os canais ja cadastrados
     @Operation(description = "Lista os canais que existem na aplicação.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Retorna os canais existentes."),
+            @ApiResponse(responseCode = "200", description = "Retorna um arrayList com os canais existentes."),
             @ApiResponse(responseCode = "400", description = "Canais não encontrados.")
     })
     @GetMapping("/listChannels")
@@ -44,7 +44,7 @@ public class ChannelsController {
     // Metodo para criar um novo canal
     @Operation(description = "Cria um novo canal para a aplicação.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Retorna o canal que foi criado com suas informações."),
+            @ApiResponse(responseCode = "200", description = "Retorna o objeto canal que foi criado com suas informações."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PostMapping("/addChannel")

@@ -48,7 +48,7 @@ public class ManagerService {
     public Employee updateEmployeePosition(String code, EmployeeDTO employeeDTO) {
         Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
         if (!optionalEmployee.isPresent()) {
-            throw new EmployeeNotFoundException("Funcionário não encontrado.");
+            throw new EmployeeNotFoundException("Gerente não encontrado.");
         }
         Employee currentUser = optionalEmployee.get();
         if (!employeeService.isManager(currentUser)) {
@@ -64,7 +64,7 @@ public class ManagerService {
     public Employee updateEmployeeDepartment(String code, EmployeeDTO employeeDTO) {
         Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
         if (!optionalEmployee.isPresent()) {
-            throw new EmployeeNotFoundException("Funcionário não encontrado.");
+            throw new EmployeeNotFoundException("Gerente não encontrado.");
         }
 
         Employee currentUser = optionalEmployee.get();
@@ -82,7 +82,7 @@ public class ManagerService {
     public Employee updateEmployeeEmail(String code, EmployeeDTO employeeDTO) {
         Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
         if (!optionalEmployee.isPresent()) {
-            throw new EmployeeNotFoundException("Funcionário não encontrado.");
+            throw new EmployeeNotFoundException("Gerente não encontrado.");
         }
 
         Employee currentUser = optionalEmployee.get();
@@ -101,7 +101,7 @@ public class ManagerService {
     public Employee updateEmployeePassaword(String code, EmployeeDTO employeeDTO) {
         Optional<Employee> optionalEmployee = employeeRepository.findByCode(code);
         if (!optionalEmployee.isPresent()) {
-            throw new EmployeeNotFoundException("Funcionário não encontrado.");
+            throw new EmployeeNotFoundException("Gerente não encontrado.");
         }
 
         Employee currentUser = optionalEmployee.get();

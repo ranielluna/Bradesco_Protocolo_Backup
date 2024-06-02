@@ -45,7 +45,7 @@ public class SituationProtocolService {
         situationProtocol.setProtocol(protocol);
         situationProtocol.setEmployee(employee);
         situationProtocol.setProtocolResponse(situationProtocolDTO.getProtocolResponse());
-        situationProtocol.setReceiptDate(situationProtocolDTO.getReceiptDate());
+        situationProtocol.setReceiptDate(LocalDate.now());
         situationProtocol.setLastActionDate(LocalDate.now());
         try {
             return situationProtocolRepository.save(situationProtocol);

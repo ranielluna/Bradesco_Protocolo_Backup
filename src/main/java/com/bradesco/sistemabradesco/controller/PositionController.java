@@ -47,7 +47,7 @@ public class PositionController {
     @Operation(description = "Criar um novo cargo na aplicação.")
     @ApiResponses({
 
-            @ApiResponse(responseCode = "200", description = "Retorna o cargo com o código dele."),
+            @ApiResponse(responseCode = "200", description = "Retorna o objeto cargo que foi criado."),
             @ApiResponse(responseCode = "400", description = "Bad request.")
     })
     @PostMapping("/addPosition")
@@ -57,6 +57,12 @@ public class PositionController {
 
     // UPDATE
     // Atualizar cargo
+    @Operation(description = "Atualiza o título de um cargo.")
+    @ApiResponses({
+
+            @ApiResponse(responseCode = "200", description = "Retorna o objeto cargo com seu título atualizado"),
+            @ApiResponse(responseCode = "400", description = "Bad Request.")
+    })
     @PutMapping("/{code}")
     public ResponseEntity<Position> updatePosition(@PathVariable int code, @RequestBody PositionDTO positionDTO) {
         Position updatedPosition = positionService.updatePosition(code, positionDTO);

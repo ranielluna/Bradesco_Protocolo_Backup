@@ -78,6 +78,7 @@ public class ProtocolController {
 		}
 	}
 
+	// listar protocolos
 	@Operation(description = "Lista todos protocolos da aplicação.")
 	@ApiResponses({
 
@@ -90,6 +91,7 @@ public class ProtocolController {
 		return Protocols;
 	}
 
+	// encontrar protocolo por código
 	@Operation(description = "Encontra um protocolo por meio do Código dele.")
 	@ApiResponses({
 
@@ -103,6 +105,12 @@ public class ProtocolController {
 	}
 
 	// encontra o protocolo pelo número dele
+	@Operation(description = "Encontra um protocolo por meio do Número dele.")
+	@ApiResponses({
+
+			@ApiResponse(responseCode = "200", description = "Retorna apenas um protocolo com o número dele."),
+			@ApiResponse(responseCode = "400", description = "Bad request.")
+	})
 	@GetMapping(value = "/number/{protocolNumber}")
 	public ResponseEntity<Protocol> findByProtocolNumber(@PathVariable Long protocolNumber) {
 		Optional<Protocol> result = protocolRepository.findByProtocolNumber(protocolNumber);
@@ -113,6 +121,7 @@ public class ProtocolController {
 		}
 	}
 
+	// lista protocolos por status específico
 	@Operation(description = "Listar protocolos pelo status.")
 	@ApiResponses({
 
@@ -126,6 +135,7 @@ public class ProtocolController {
 
 	// http://localhost:8080/api/protocol/status?status=Em%20an%C3%A1lise
 
+	// cria um novo protocolo
 	@Operation(description = "Cria um protocolo na aplicação.")
 	@ApiResponses({
 
@@ -138,22 +148,13 @@ public class ProtocolController {
 
 	}
 
-	@Operation(description = "Deleta um protocolo da aplicação.")
+	// pega o funcionario responsavel pelo protocolo
+	@Operation(description = "Encontrar funcionário responsável por um protocolo.")
 	@ApiResponses({
 
-			@ApiResponse(responseCode = "200", description = "Remove um protocolo e exibe uma mensagem de sucesso."),
+			@ApiResponse(responseCode = "200", description = "Retorna o protocolo criado com as suas informações."),
 			@ApiResponse(responseCode = "400", description = "Bad request.")
 	})
-	@DeleteMapping("/delete/{code}")
-	public ResponseEntity<Object> deleteProtocol(@PathVariable int code) {
-		protocolService.deleteProtocol(code);
-		Map<String, String> message = new HashMap<>();
-		message.put("message", "Protocolo deletado com sucesso!");
-		return ResponseEntity.ok(message);
-
-	}
-
-	// pega o funcionario responsavel pelo protooclo
 	@GetMapping("/employee/{number}")
 	public ResponseEntity<String> getEmployee(@PathVariable Long number) {
 		Optional<Protocol> protocolOpt = protocolRepository.findByProtocolNumber(number);
@@ -172,7 +173,13 @@ public class ProtocolController {
 		}
 	}
 
-	// Verifica os protocolos que nao estão em situação protocolo
+	// Verifica os protocolos que não estão em situação protocolo
+	@Operation(description = "Cria um protocolo na aplicação.")
+	@ApiResponses({
+
+			@ApiResponse(responseCode = "200", description = "Retorna o protocolo criado com as suas informações."),
+			@ApiResponse(responseCode = "400", description = "Bad request.")
+	})
 	@GetMapping("/situationless")
 	public List<Protocol> listProtocolNotSituation() {
 		List<Protocol> Protocols = protocolService.findUnregistered();
@@ -256,6 +263,13 @@ public class ProtocolController {
 		}
 	}
 
+	// Adicona o status de "respondido ao protocolo"
+	@Operation(description = "Adciona um status de 'Respondido' ao protocolo.")
+	@ApiResponses({
+
+			@ApiResponse(responseCode = "200", description = "Retorna o objeto protocolo com seu status 'Respondido'."),
+			@ApiResponse(responseCode = "400", description = "Bad request.")
+	})
 	@PutMapping("/final/{number}")
 	public ResponseEntity<Protocol> finalUpdateStatusProtocol(@PathVariable Long number) {
 		try {
@@ -266,6 +280,13 @@ public class ProtocolController {
 		}
 	}
 
+	// Atulizar status do protocolo
+	@Operation(description = "Atualiza o status de um protocolo.")
+	@ApiResponses({
+
+			@ApiResponse(responseCode = "200", description = "Retorna o objeto protocolo com seu status atualizado."),
+			@ApiResponse(responseCode = "400", description = "Bad request.")
+	})
 	@PutMapping("/updateStatus/{number}")
 	public ResponseEntity<Protocol> updateStatusProtocol(@PathVariable Long number,
 			@RequestBody ProtocolDTO protocolDTO) {
@@ -275,6 +296,21 @@ public class ProtocolController {
 		} catch (RuntimeException e) {
 			return ResponseEntity.notFound().build();
 		}
+	}
+
+	@Operation(description = "Deleta um protocolo da aplicação.")
+	@ApiResponses({
+
+			@ApiResponse(responseCode = "200", description = "Remove um protocolo e exibe uma mensagem de sucesso."),
+			@ApiResponse(responseCode = "400", description = "Bad request.")
+	})
+	@DeleteMapping("/delete/{code}")
+	public ResponseEntity<Object> deleteProtocol(@PathVariable int code) {
+		protocolService.deleteProtocol(code);
+		Map<String, String> message = new HashMap<>();
+		message.put("message", "Protocolo deletado com sucesso!");
+		return ResponseEntity.ok(message);
+
 	}
 
 }// class

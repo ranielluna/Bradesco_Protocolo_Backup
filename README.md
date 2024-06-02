@@ -1,25 +1,23 @@
-# Bradesco_Protocolo
-Sistema de gerenciamento e atendimento de protocolos para a Residência Takeoff 2024.1 juntamente com a empresa Bradesco.
-
 # Sistema de Gerenciamento de Protocolos e Demandas Bancárias
 
 Este sistema é uma API que foi desenvolvida para facilitar o gerenciamento de protocolos e demandas solicitadas por um requerente.
 
 A API faz os registros de demandas do tipo: Informação, Reclamação, Cancelamento, Elogi, Consulta, Solicitação e Denúncia. Além disso, é possível também gerenciar os funcionários.
 
-(Deixar claro que tem dois pontos de vista diferentes, um de um cliente onde ele faz a abertura do protocolo e outro dos funcionários.)
 
 ## PRINCIPAIS FUNCIONALIDADES
 
 Na nossa API, algumas das principais funcionalidades são:
 
 - Um usuário fazer a abertura de um protocolo ou demanda, tendo a opção de se identificar ou não.
-- Um usuário/requerente acompanhar e fazer consultas em seu protocolo para buscar a resposta que a instituição deu referente ao seu protocolo.
-- Um funcionário (Analista)/(Operador?) consegue fazer a tratativa desse protocolo, sendo responsável por responder um protocolo da melhor forma.
-- A demanda ou protocolo é distribuída de forma automática para o funcionário (Analista) com menor demanda ainda não tratadas, a depender do departamento que será resolvido o protocolo.
-- Um funcionário gerente é capaz de fazer o gerenciamento de funcionários (?).
+- Um requerente pode acompanhar e fazer consultas em seu protocolo para visualizar a resposta que a instituição deu referente ao seu protocolo.
+- Um funcionário, Analista ou Operador, consegue fazer a tratativa de protocolos, sendo responsável por responder um protocolo da melhor forma.
+- A demanda ou protocolo é distribuída de forma automática para um funcionário Analista com menor demanda ainda não tratadas, a depender do departamento que será resolvido o protocolo.
+- Apenas um funcionário Gerente é capaz de fazer alterações sensiveis de funcionários, como mudar cargo, status ou departamento de um funcionário.
+- Um status de um protocol é definido e tem seu controle feito pelo próprio sistema.
 
 Para mais funcionalidades teste no swagger: ------
+
 
 ## INFORMAÇÕES COMPLEMENTARES
 
@@ -37,6 +35,7 @@ Responsável pelo armazenamento e recuperação de dados. Os repositórios inter
 ### DTO Layer
 Desempenham um papel crucial nesta arquitetura, servindo como objetos que transportam dados entre processos para reduzir o número de chamadas de métodos.
 
+
 ## ROTAS
 
 Durante a construção da API, as rotas para a porta utilizada foi a `http://localhost:8080`.
@@ -47,6 +46,7 @@ Estrutura das rotas que usamos segue um padrão de `/api/` classe referente ao s
 
 - `GET /api/employee/listEmployees`: Neste exemplo, buscamos a função de listar todos os funcionários cadastrados no sistema.
 - `GET /api/protocol/number/{protocolNumber}`: Neste caso, estamos buscando um protocolo por seu número de registro, número este que iremos enviar através da URL no campo `/ {protocolNumber}`.
+
 
 ## CONFIGURAÇÃO DO AMBIENTE
 

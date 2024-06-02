@@ -61,5 +61,9 @@ Antes de executar o projeto, será necessário seguir alguns passos que listamos
 ### INSTALAÇÃO 
 
 No seu terminal rode os seguintes comandos:
-`git clone https://github.com/ranielluna/Bradesco_Protocolo_Backup.git cd Bradesco_Protocolo_Backup`
-Com o projeto aberto, basta apenas rodar ou pelo terminal com o comando: `./mvnw spring-boot:run` ou pelo botão Run da própria IDE.
+
+`git clone https://github.com/ranielluna/Bradesco_Protocolo_Backup.git` 
+`cd Bradesco_Protocolo_Backup`
+
+Com o projeto aberto, basta apenas rodar ou pelo terminal com o comando: 
+`./mvnw spring-boot:run` ou pelo botão Run da própria IDE.

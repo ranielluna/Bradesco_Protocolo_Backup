@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PositionService {
+
+    
     @Autowired
     private PositionRepository positionRepository;
 
@@ -29,9 +31,19 @@ public class PositionService {
         return positionRepository.save(position);
     }
 
+    // update cargo
+    @Transactional
+    public Position updatePosition(int code, PositionDTO positionDTO) {
+        // encontrando o cargo por codigo
+        Position position = positionRepository.findByCode(code);
+        // atualizando campos
+        position.setPosition(positionDTO.getPosition());
+        return positionRepository.save(position);
+    }
+
     // Metodo de deletar um cargo
     @Transactional
-    public void deletePosition(int code){
+    public void deletePosition(int code) {
         positionRepository.deleteById(code);
     }
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 import com.bradesco.sistemabradesco.models.Department;
 import com.bradesco.sistemabradesco.dto.DepartmentDTO;
 import com.bradesco.sistemabradesco.repository.DepartmentRepository;
@@ -16,24 +17,35 @@ public class DepartmentService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
-    
 
-    /* metodo criar */
-     public Department addDepartment(DepartmentDTO departmentDTO){
+    // metodo criar
+    @Transactional
+    public Department addDepartment(DepartmentDTO departmentDTO) {
         Department newDepartment = new Department();
         BeanUtils.copyProperties(departmentDTO, newDepartment);
         return departmentRepository.save(newDepartment);
     }
 
-    /* metodo deletar */
+    // metodo de atualizar departamento
     @Transactional
-    public void deleteDepartment(int code){
+    public Department updateDepartment(int code, DepartmentDTO departmentDTO) {
+        // encontrando o departamento pelo id
+        Department department = departmentRepository.findByCode(code);
+        // .orElseThrow(()-> new RuntimeException("Departamento não encontrado por este
+        // código:" + code));
+        department.setDepartment(departmentDTO.getDepartment());
+        return departmentRepository.save(department);
+    }
+
+    // metodo deletar
+    @Transactional
+    public void deleteDepartment(int code) {
         departmentRepository.deleteById(code);
     }
 
-    /* listar departamento */
-    public List<Department> listDepartments(){
+    // listar departamento
+    public List<Department> listDepartments() {
         return departmentRepository.findAll();
     }
-    
+
 }

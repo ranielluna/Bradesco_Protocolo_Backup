@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,30 +30,35 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-  
     /* criando Departamento */
     @Operation(description = "Cria um departamento na aplicação.")
-      @ApiResponses({
+    @ApiResponses({
 
-        @ApiResponse(responseCode = "200", description = "Retorna o departamento com suas informações."),
-        @ApiResponse(responseCode = "400", description = "Bad request.")
-     }
-    )
+            @ApiResponse(responseCode = "200", description = "Retorna o departamento com suas informações."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @PostMapping("/addDepartment")
-    public Department addDepartment(@RequestBody DepartmentDTO departmentDTO){
+    public Department addDepartment(@RequestBody DepartmentDTO departmentDTO) {
         return departmentService.addDepartment(departmentDTO);
+    }
+
+    // Atualizar departamento
+    @PutMapping("/{code}")
+    public ResponseEntity<Department> updateDepartment(@PathVariable int code,
+            @RequestBody DepartmentDTO departmentDTO) {
+        Department updatedDepartment = departmentService.updateDepartment(code, departmentDTO);
+        return ResponseEntity.ok(updatedDepartment);
     }
 
     /* deletando departamento */
     @Operation(description = "Deleta um departamento da aplicação.")
     @ApiResponses({
 
-        @ApiResponse(responseCode = "200", description = "Remove um departamento da aplicação e mostra uma mensagem de sucesso!."),
-        @ApiResponse(responseCode = "400", description = "Bad request.")
-     }
-    )
+            @ApiResponse(responseCode = "200", description = "Remove um departamento da aplicação e mostra uma mensagem de sucesso!."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @DeleteMapping("/delete/{code}")
-    public ResponseEntity<Object> deleteDepartment(@PathVariable int code){
+    public ResponseEntity<Object> deleteDepartment(@PathVariable int code) {
         departmentService.deleteDepartment(code);
         Map<String, String> message = new HashMap<>();
         message.put("message", "Departamento deletado com sucesso");
@@ -64,15 +70,13 @@ public class DepartmentController {
     @Operation(description = "Lista todos os departamentos existentes na aplicação.")
     @ApiResponses({
 
-        @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os departamentos existentes."),
-        @ApiResponse(responseCode = "400", description = "Bad request.")
-     }
-    )
+            @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os departamentos existentes."),
+            @ApiResponse(responseCode = "400", description = "Bad request.")
+    })
     @GetMapping("/listDepartment")
-    public List<Department> listDepartments(){
+    public List<Department> listDepartments() {
         return departmentService.listDepartments();
 
     }
-            
-}
 
+}

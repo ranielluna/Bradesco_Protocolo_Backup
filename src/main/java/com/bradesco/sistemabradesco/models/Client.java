@@ -1,6 +1,6 @@
 package com.bradesco.sistemabradesco.models;
 
-import java.io.Serializable;
+// import java.io.Serializable;
 
 import org.springframework.beans.BeanUtils;
 
@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
-public class Client implements Serializable {
+public class Client  {
+
   @Id
-  @Column(name = "cpf")
   private String cpf;
 
   @Column(name = "nome", length = 60, nullable = false)

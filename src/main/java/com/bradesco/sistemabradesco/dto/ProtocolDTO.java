@@ -21,20 +21,20 @@ public class ProtocolDTO {
   private ProtocolType protocolType; // tipoProtocolo
   private LocalDate initialReceiptDate; // dataRecebimentoInicial
   private Department department; // departamento
-  private boolean propensaoBacen; 
-  private boolean expedite; // agilizar
-  private boolean due; // devido
-  private boolean justified; // procedente
+  private boolean propensaoBacen; // (Se é uma reclamação que há possibilidades de gerar um apontamento BACEN)
+  private boolean expedite; // (Se por prioridade, é necessário agilizar o protocolo)
+  private boolean due; // (Se a abertura do protocolo tem um motivo plausível)
+  private boolean justified; // (Se a questão que o requerente trouxe é procedente, ou se o Banco possui alguma justificativa)
   private Long protocolNumber; // numeroProtocolo
-  private String protocolStatus; //status
+  private String protocolStatus; // status
 
-  //CONSTRUTUOR DE IMPORTAÇÃO DA ENTIDADE PROTOCOLO
-  public ProtocolDTO(Protocol protocol){
+  // CONSTRUTUOR DE IMPORTAÇÃO DA ENTIDADE PROTOCOLO
+  public ProtocolDTO(Protocol protocol) {
     BeanUtils.copyProperties(protocol, this);
   }
 
-  //CONSTRUTOR VAZIO
-  public ProtocolDTO(){
+  // CONSTRUTOR VAZIO
+  public ProtocolDTO() {
 
   }
 

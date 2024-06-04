@@ -40,7 +40,7 @@ Desempenham um papel crucial nesta arquitetura, servindo como objetos que transp
 
 Durante a construção da API, as rotas para a porta utilizada foi a `http://localhost:8080`.
 
-E após o deploy a rota passou a ser: -------
+E após o deploy a rota passou a ser: `http://ec2-3-238-189-164.compute-1.amazonaws.com:8080/api/protocol`
 
 Estrutura das rotas que usamos segue um padrão de `/api/` classe referente ao serviço / serviço que buscamos.
 

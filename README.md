@@ -16,7 +16,7 @@ Na nossa API, algumas das principais funcionalidades são:
 - Apenas um funcionário Gerente é capaz de fazer alterações sensiveis de funcionários, como mudar cargo, status ou departamento de um funcionário.
 - Um status de um protocol é definido e tem seu controle feito pelo próprio sistema.
 
-Para mais funcionalidades teste no swagger: ------
+Para mais funcionalidades teste no swagger: `http://3.238.189.164:8080/swagger-ui/index.html#/`
 
 
 ## INFORMAÇÕES COMPLEMENTARES
@@ -41,6 +41,8 @@ Desempenham um papel crucial nesta arquitetura, servindo como objetos que transp
 Durante a construção da API, as rotas para a porta utilizada foi a `http://localhost:8080`.
 
 E após o deploy a rota passou a ser: `http://ec2-3-238-189-164.compute-1.amazonaws.com:8080/api/protocol`
+- Para o deploy da aplicação estamos usando uma instância da AWS, então se o link estiver insdisponível significa que você terá que se conectar a nossa intância.
+- Aqui está o tutorial do passo-a-passo para fazer este processo `https://www.notion.so/Tutorial-de-Conex-o-API-c4d4fa049ad741109e6e4bef56c7b29b?pvs=4`
 
 Estrutura das rotas que usamos segue um padrão de `/api/` classe referente ao serviço / serviço que buscamos.
 

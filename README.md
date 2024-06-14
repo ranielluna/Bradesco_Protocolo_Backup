@@ -73,3 +73,8 @@ cd Bradesco_Protocolo_Backup
 
 Com o projeto aberto, basta apenas rodar ou pelo terminal com o comando: 
 `./mvnw spring-boot:run` ou pelo botão Run da própria IDE.
+
+
+## DOCUMENTAÇÃO DAS REQUISIÇÕES
+
+`https://thin-balance-879.notion.site/Documenta-o-API-Gerenciador-Protocolos-3dcb331fb6af49f2bfe84c9bf2e2259d`
